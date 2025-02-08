@@ -1,4 +1,4 @@
-class Object {
+class Object { // Everything set up in the scenario
     position; rotation;
     velocity; acceleration;
     
@@ -20,7 +20,7 @@ class Object {
     }
 }
 
-class Rocket extends Object {
+class Rocket extends Object { // User controlled object
     fuel; thrust;
     #left; #right;
 
@@ -32,13 +32,13 @@ class Rocket extends Object {
 
     set left(value) {
         this.#left = value;
-        if (this.#left < 0) { this.#left = 0; }
+        if (this.#left < -100) { this.#left = -100; }
         else if (this.#left > 100) { this.#left = 100; }
     }
 
     set right(value) {
         this.#right = value;
-        if (this.#right < 0) { this.#right = 0; }
+        if (this.#right < -100) { this.#right = -100; }
         else if (this.#right > 100) { this.#right = 100; }
     }
 
@@ -54,6 +54,15 @@ class Rocket extends Object {
         // Calculate and apply torque (currently using arbitrary constant 10)
         this.rotation -= 10 * (this.#left / 100);
         this.rotation += 10 * (this.#right / 100);
+    }
+}
+
+class Camera { // Viewport
+    position;
+    resolution;
+    constructor(resX, resY) {
+        this.position = new Vector2(0, 0);
+        this.resolution = new Vector2(resX, resY);
     }
 }
 

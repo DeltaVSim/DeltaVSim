@@ -1,59 +1,48 @@
 class Logic {
-    constructor() {
-        this.data = {
-            fuel: 0,
-            thrust: 0,
-            force: 0,
-            gravity: 0,
-            over: false
+    // Scenario
+    #camera;
+    #rocket;
+    #objects = [];
+
+    // Simulation State
+    #timestep = 16;
+    #lastUpdate = 0;
+    #updatesPerFrame = 1;
+    #running = false;
+
+    // Physics
+    #gravityConstant = 0.0000000000674;
+
+    constructor(scenario, resX, resY) {
+        this.#camera = new Camera(resX, resY);
+    }
+
+    Update(timestamp) {
+        if (timestamp - this.#lastUpdate < this.#timestep) { return; } // Early exit
+        this.#lastUpdate = timestamp;
+
+        if (!this.#running) { return; } // Early exit
+        
+        for (const object of this.#objects) {
+            object.relocate(); // Update position of object
+            for (let index = this.#objects.indexOf(object); index < this.#objects.length; index++) {
+                if (this.#objects[index] != object) {
+
+                    // Localize the two objects
+                    let object1 = object;
+                    let object2 = this.#objects[index];
+
+                    // Find distance between the two objects
+                    let distance = object1.position.distance(object2.position);
+
+                    // Apply gravitational force (G * (m1 * m2) / r^2)
+                    let force = this.#gravityConstant * (object1.mass * object2.mass) / (distance ** 2);
+
+                    // Apply forces to the two objects
+                    object1.impulse(object2.position.subtract(object1.position).divide(distance).multiply(force));
+                    object2.impulse(object1.position.subtract(object2.position).divide(distance).multiply(force));
+                }
+            }
         }
-    }
-
-    calculateForce(rocket) {
-        m = rocket.getMass();
-        g = this.getGravity();
-        t = this.getThrust();
-        w = m * g;
-        this.data.force = t - w;
-    }
-
-    getForce() {
-        return this.data.force;
-    }
-
-    setGravity(gravity) {
-        this.data.gravity = gravity
-    }
-
-    getGravity() {
-        return this.data.gravity;
-    }
-
-    setFuel(fuel) {
-        this.data.fuel = fuel;
-    }
-
-    getFuel() {
-        return this.data.fuel;
-    }
-
-    setThrust(thrust1, thrust2) {
-        this.data.thrust = thrust1 + thrust2;
-    }
-
-    getThrust() {
-        return this.data.thrust;
-    }
-
-    setOver(threshold, force) {
-        if (Math.abs(force) > threshold) {
-            this.data.over = true;
-        } else {
-            this.data.over = false;
-        }
-    }
-
-    isOver() {
-        return this.data.over;
     }
 }
