@@ -48,6 +48,8 @@ class Logic {
     setOver(threshold, force) {
         if (Math.abs(force) > threshold) {
             this.data.over = true;
+        } else {
+            this.data.over = false;
         }
     }
 
