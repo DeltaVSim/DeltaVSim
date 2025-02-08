@@ -1,3 +1,4 @@
+/* Base styles */
 * {
     --primary: black;
     --secondary: #2C2727;
@@ -57,6 +58,7 @@ body {
     left: 0;
 }
 
+/* Assistant-enhanced menu and IDE styles */
 .menu, .ide, .scenario-selector {
     position: fixed;
     top: 50%;
@@ -64,91 +66,274 @@ body {
     transform: translate(-50%, -50%);
     background-color: var(--secondary);
     border-radius: 0.625em;
-    padding: 1.25em;
-    display: none !important; /* Force menus to be hidden initially */
+    padding: 1.5em;
+    display: none !important;
     z-index: 1000;
     min-width: 31.25em;
+    box-shadow: 0 0.5em 2em rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+.menu h3 {
+    color: var(--alternative);
+    margin-bottom: 1em;
+    font-size: 1.2em;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+/* Assistant-enhanced menu bar styles */
 .menu-bar {
     position: fixed;
-    bottom: 1.25em; /* Use em for bottom */
+    bottom: 1.25em;
     left: 50%;
     transform: translateX(-50%);
     background-color: var(--alternative);
     color: var(--other);
-    padding: 0.625em 1.25em; /* Use em for padding */
-    border-radius: 1.5625em; /* Use em for border-radius */
+    padding: 0.8em 1.5em;
+    border-radius: 2em;
     display: flex;
-    gap: 1.25em; /* Use em for gap */
+    gap: 1.25em;
+    box-shadow: 0 0.25em 1em rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
 }
 
 .menu-bar div {
     cursor: pointer;
-    padding: 0.3125em 0.9375em; /* Use em for padding */
-    border-radius: 0.9375em; /* Use em for border-radius */
-    transition: background-color 0.3s;
+    padding: 0.5em 1.2em;
+    border-radius: 1.2em;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    letter-spacing: 0.05em;
 }
 
 .menu-bar div:hover {
     background-color: var(--secondary);
+    transform: translateY(-2px);
 }
 
 .close-btn {
     position: absolute;
-    top: 0.625em; /* Use em for top */
-    right: 0.9375em; /* Use em for right */
+    top: 1em;
+    right: 1em;
     cursor: pointer;
-    color: var(--other);
+    color: var(--alternative);
     font-size: 1.2em;
     font-weight: bold;
+    transition: color 0.3s ease;
+    width: 1.5em;
+    height: 1.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.close-btn:hover {
+    color: var(--other);
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 .scenario-selector select {
     width: 100%;
-    padding: 0.625em;
-    margin: 0.625em 0; 
-    border-radius: 0.3125em; 
-    background-color: var(--other);
-    color: var(--primary);
+    padding: 0.8em;
+    margin: 0.625em 0;
+    border-radius: 0.5em;
+    background-color: var(--primary);
+    color: var(--other);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
+.scenario-selector select:hover {
+    border-color: var(--alternative);
+}
+
+.scenario-selector select:focus {
+    outline: none;
+    border-color: var(--alternative);
+    box-shadow: 0 0 0 2px rgba(255, 117, 23, 0.2);
+}
+
+/* Assistant-created IDE styles */
 .ide {
-    min-width: 49em; 
-    min-height: 38em;
+    min-width: 50em;
+    min-height: 40em;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    align-self: center;
+    gap: 1em;
 }
 
 .ide textarea {
     flex: 1;
     margin: 0.625em 0;
-    padding: 0.9375em; 
-    background-color: black;
-    color: white;
-    border-radius: 0.3125em; 
+    padding: 1.2em;
+    background-color: var(--primary);
+    color: var(--other);
+    border-radius: 0.5em;
     font-family: 'Courier New', Courier, monospace;
-    min-height: 40em; 
-    width: 56em; 
+    min-height: 40em;
+    width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    resize: none;
+    line-height: 1.5;
+    font-size: 0.95em;
+    transition: border-color 0.3s ease;
 }
 
+.ide textarea:focus {
+    outline: none;
+    border-color: var(--alternative);
+    box-shadow: 0 0 0 2px rgba(255, 117, 23, 0.2);
+}
+
+/* Assistant-created run button styles */
 .run-button {
     position: fixed;
-    bottom: 1.25em; 
-    right: 1.25em; 
-    background-color: var(--other);
-    color: var(--secondary);
-    padding: 0.75em 1.5625em; 
-    border-radius: 1.5625em;
-    transition: background-color 0.3s;
+    bottom: 1.25em;
+    right: 1.25em;
+    background-color: var(--alternative);
+    color: var(--other);
+    padding: 0.8em 2em;
+    border-radius: 2em;
+    transition: all 0.3s ease;
     font-size: 1em;
     font-weight: bold;
     border: none;
     z-index: 1000;
+    box-shadow: 0 0.25em 1em rgba(0, 0, 0, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
 }
 
 .run-button:hover {
-    background-color: var(--alternative);
+    background-color: var(--other);
+    color: var(--secondary);
+    transform: translateY(-2px);
+    box-shadow: 0 0.4em 1.2em rgba(0, 0, 0, 0.3);
+}
+
+/* Assistant-created levels page styles */
+.levels-container {
+    padding: 2em;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    margin-top: 2em;
+}
+
+.levels-container h1 {
+    color: var(--alternative);
+    text-align: center;
+    margin-bottom: 1.5em;
+    font-size: 2.5em;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.levels-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2em;
+    padding: 1em;
+    margin-bottom: 2em;
+}
+
+/* Assistant-created level card styles with enhanced hover effects */
+.level-card {
+    position: relative;
+    border-radius: 1em;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    aspect-ratio: 16/18;
+    box-shadow: 0 0.5em 1em rgba(0, 0, 0, 0.2);
+    background-color: var(--secondary);
+}
+
+.level-card:hover {
+    transform: translateY(-0.5em);
+    box-shadow: 0 1em 2em rgba(0, 0, 0, 0.3);
+}
+
+.level-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+    border-radius: 1em;
+    opacity: 0.8;
+}
+
+.level-card:hover img {
+    transform: scale(1.1);
+}
+
+.level-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1.5em;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+    color: var(--other);
+    transform: translateY(0);
+    transition: transform 0.3s ease;
+}
+
+.level-card:hover .level-info {
+    transform: translateY(-0.5em);
+}
+
+.level-info h3 {
+    margin: 0;
+    font-size: 1.5em;
+    margin-bottom: 0.5em;
+    color: var(--alternative);
+}
+
+.level-info p {
+    margin: 0;
+    font-size: 0.9em;
+    line-height: 1.4;
+    opacity: 0.9;
+}
+
+/* Add placeholder styles for when images haven't loaded */
+.level-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--secondary);
+    border-radius: 1em;
+    z-index: -1;
+}
+
+/* Assistant-created responsive adjustments */
+@media (max-width: 768px) {
+    .levels-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1em;
+    }
+
+    .levels-container h1 {
+        font-size: 2em;
+    }
+
+    .level-info {
+        padding: 1em;
+    }
+
+    .level-info h3 {
+        font-size: 1.2em;
+    }
+
+    .level-info p {
+        font-size: 0.8em;
+    }
 }

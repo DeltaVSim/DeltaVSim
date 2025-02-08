@@ -3,13 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DeltaVSim levels</title>
+    <title>Levels</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-
-        
+    <div class="menu-bar">
+        <div onclick="window.location.href='index.html'">Home</div>
+        <div onclick="window.location.href='simulator.html'">Simulator</div>
     </div>
-    
+
+    <div class="levels-container">
+        <h1>Select Your Challenge</h1>
+        <div class="levels-grid">
+            <div class="level-card" onclick="window.location.href='simulator.html?level=earth'">
+                <img src="assets/earth.jpg" alt="Earth Level">
+                <div class="level-info">
+                    <h3>Earth</h3>
+                    <p>Master rocket landing in Earth's strong gravitational field</p>
+                </div>
+            </div>
+
+            <div class="level-card" onclick="window.location.href='simulator.html?level=moon'">
+                <img src="assets/moon.jpg" alt="Moon Level">
+                <div class="level-info">
+                    <h3>Moon</h3>
+                    <p>Practice precise landing in lower gravity conditions</p>
+                </div>
+            </div>
+
+            <div class="level-card" onclick="window.location.href='simulator.html?level=mars'">
+                <img src="assets/mars.jpg" alt="Mars Level">
+                <div class="level-info">
+                    <h3>Mars</h3>
+                    <p>Navigate Mars' unique atmospheric and gravity conditions</p>
+                </div>
+            </div>
+
+            <div class="level-card" onclick="window.location.href='simulator.html?level=jupiter'">
+                <img src="assets/jupiter.jpg" alt="Jupiter Level">
+                <div class="level-info">
+                    <h3>Jupiter</h3>
+                    <p>Challenge yourself in extreme high-gravity conditions</p>
+                </div>
+            </div>
+
+            <div class="level-card" onclick="window.location.href='simulator.html?level=europa'">
+                <img src="assets/europa.jpg" alt="Europa Level">
+                <div class="level-info">
+                    <h3>Europa</h3>
+                    <p>Land on Jupiter's icy moon with minimal gravity</p>
+                </div>
+            </div>
+
+            <div class="level-card" onclick="window.location.href='simulator.html?level=uranus'">
+                <img src="assets/uranus.jpg" alt="Uranus Level">
+                <div class="level-info">
+                    <h3>Uranus</h3>
+                    <p>Master landing in unique tilted gravitational conditions</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
