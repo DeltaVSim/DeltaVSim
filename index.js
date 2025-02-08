@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const path = require('path');
 port = 80
 
 app.listen(port, () => {
@@ -8,5 +9,5 @@ app.listen(port, () => {
 
   app.get('/', (req, res) => {
     console.log('/ made from: ' + req.ip)
-    res.send('/webpage/index.html')
+    res.sendFile(path.join(__dirname, 'public/index.html'));
   });
