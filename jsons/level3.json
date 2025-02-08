@@ -1,0 +1,10 @@
+{
+    "objects" : 
+        [{"mass" : 10, "position" : {"x" : -700, "y" : -300 }, "radius" : 12, "model" : "mars.json"}, 
+        {"mass" : 106.99 , "position" : {"x" : 800, "y" : 400 }, "radius" : 33, "model" : "mars.json"}, 
+        {"mass" : 1.7 , "position" : {"x" : 0, "y" : -200 }, "radius" : 10, "model" : "asteroid.json"},
+        {"mass" : 2 , "position" : {"x" : -200, "y" : 250 }, "radius" : 5, "model" : "asteroid.json"}], 
+
+    "rocket" : 
+        [{"position" : {"x" : -700, "y" : -288}, "fuel" : 85}]
+} 
