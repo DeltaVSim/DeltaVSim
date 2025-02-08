@@ -1,15 +1,15 @@
 * {
-    --primary: #2b353f;
-    --secondary: #EEE3CB;
-    --alternative: #0073e6;
-    --other: #967E76;
-    font-family: sans-serif;
+    --primary: black;
+    --secondary: #2C2727;
+    --alternative: #FF7517;
+    --other: #F6F4F4;
+    font-family: 'Chubby Toon', sans-serif;
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 body {
-    background-color:var(--primary);
+    background-color: var(--primary);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -17,34 +17,141 @@ body {
     width: 100%;
     margin: 0; /* Remove default margin */
     overflow-x: hidden;
-    color: var(--secondary);
+    color: var(--other);
 }
 
 .title {
-    display:block;
-    padding: 40px 60px;
+    display: block;
+    padding: 2.5em 3.75em; /* Use em for padding */
     text-align: center;
     width: 50%;
     margin: 0 auto;
     overflow: hidden;
-    font-size: 1000px;
+    font-size: 10vw; /* Use vw for font size */
 }
 
 .coolBorder {
     display: block;
-    padding: 40px 60px;
-    border: 5px solid var(--other);
-    border-radius: 20px;
+    padding: 2.5em 3.75em; /* Use em for padding */
+    border: 0.3125em solid var(--other); /* Use em for border */
+    border-radius: 1.25em; /* Use em for border-radius */
     background-color: var(--secondary);
     text-align: center;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     width: 100%;
-    max-width: 600px;
+    max-width: 37.5em; /* Use em for max-width */
     margin: 0 auto;
     overflow: hidden;
 }
 
 .notification {
-    display:block;
-    color:var(--other);
+    display: block;
+    color: var(--other);
+}
+
+/* used github copilot to generate some element sizing formatting below (commented) */
+#scene-container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.menu, .ide, .scenario-selector {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--secondary);
+    border-radius: 0.625em; /* Use em for border-radius */
+    padding: 1.25em; /* Use em for padding */
+    display: none;
+    z-index: 1000;
+    min-width: 31.25em; /* Use em for min-width */
+}
+
+.menu-bar {
+    position: fixed;
+    bottom: 1.25em; /* Use em for bottom */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--alternative);
+    color: var(--other);
+    padding: 0.625em 1.25em; /* Use em for padding */
+    border-radius: 1.5625em; /* Use em for border-radius */
+    display: flex;
+    gap: 1.25em; /* Use em for gap */
+}
+
+.menu-bar div {
+    cursor: pointer;
+    padding: 0.3125em 0.9375em; /* Use em for padding */
+    border-radius: 0.9375em; /* Use em for border-radius */
+    transition: background-color 0.3s;
+}
+
+.menu-bar div:hover {
+    background-color: var(--secondary);
+}
+
+.close-btn {
+    position: absolute;
+    top: 0.625em; /* Use em for top */
+    right: 0.9375em; /* Use em for right */
+    cursor: pointer;
+    color: var(--other);
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.scenario-selector select {
+    width: 100%;
+    padding: 0.625em;
+    margin: 0.625em 0; 
+    border-radius: 0.3125em; 
+    background-color: var(--other);
+    color: var(--primary);
+}
+
+.ide {
+    min-width: 49em; 
+    min-height: 38em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-self: center;
+    max-width: 90%;
+}
+
+.ide textarea {
+    flex: 1;
+    margin: 0.625em 0;
+    padding: 0.9375em; 
+    background-color: black;
+    color: white;
+    border-radius: 0.3125em; 
+    font-family: 'Courier New', Courier, monospace;
+    min-height: 40em; 
+    max-height: 43em;
+    min-width: 56em;
+    max-width: 100%; 
+}
+
+.run-button {
+    position: fixed;
+    bottom: 1.25em; 
+    right: 1.25em; 
+    background-color: var(--other);
+    color: var(--secondary);
+    padding: 0.75em 1.5625em; 
+    border-radius: 1.5625em;
+    transition: background-color 0.3s;
+    font-size: 1em;
+    font-weight: bold;
+    border: none;
+    z-index: 1000;
+}
+
+.run-button:hover {
+    background-color: var(--alternative);
 }
