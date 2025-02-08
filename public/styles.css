@@ -48,7 +48,7 @@ body {
     color: var(--other);
 }
 
-/* used github copilot to generate some element sizing formatting below (commented) */
+/* used github copilot to generate some css and element sizing formatting below */
 #scene-container {
     width: 100%;
     height: 100%;
@@ -63,11 +63,11 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: var(--secondary);
-    border-radius: 0.625em; /* Use em for border-radius */
-    padding: 1.25em; /* Use em for padding */
-    display: none;
+    border-radius: 0.625em;
+    padding: 1.25em;
+    display: none !important; /* Force menus to be hidden initially */
     z-index: 1000;
-    min-width: 31.25em; /* Use em for min-width */
+    min-width: 31.25em;
 }
 
 .menu-bar {
@@ -120,7 +120,6 @@ body {
     flex-direction: column;
     align-items: center;
     align-self: center;
-    max-width: 90%;
 }
 
 .ide textarea {
@@ -132,9 +131,7 @@ body {
     border-radius: 0.3125em; 
     font-family: 'Courier New', Courier, monospace;
     min-height: 40em; 
-    max-height: 43em;
-    min-width: 56em;
-    max-width: 100%; 
+    width: 56em; 
 }
 
 .run-button {

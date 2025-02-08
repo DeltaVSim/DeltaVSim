@@ -46,9 +46,12 @@
                 const menus = document.querySelectorAll('.menu');
                 menus.forEach(menu => {
                     if (menu.classList.contains(menuClass)) {
-                        menu.style.display = menu.style.display === 'none' || menu.style.display === '' ? 'block' : 'none';
+                        menu.style.setProperty('display', 
+                            menu.style.display === 'none' || menu.style.display === '' ? 'block' : 'none', 
+                            'important'
+                        );
                     } else {
-                        menu.style.display = 'none';
+                        menu.style.setProperty('display', 'none', 'important');
                     }
                 });
             }
