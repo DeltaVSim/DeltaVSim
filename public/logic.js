@@ -3,6 +3,7 @@ class Logic {
     #camera;
     #rocket;
     #objects = [];
+    #simulation = [];
 
     // Simulation State
     #timestep = 16;
@@ -23,14 +24,14 @@ class Logic {
 
         if (!this.#running) { return; } // Early exit
         
-        for (const object of this.#objects) {
+        for (const object of this.#simulation) {
             object.relocate(); // Update position of object
-            for (let index = this.#objects.indexOf(object); index < this.#objects.length; index++) {
-                if (this.#objects[index] != object) {
+            for (let index = this.#simulation.indexOf(object); index < this.#simulation.length; index++) {
+                if (this.#simulation[index] != object) {
 
                     // Localize the two objects
                     let object1 = object;
-                    let object2 = this.#objects[index];
+                    let object2 = this.#simulation[index];
 
                     // Find distance between the two objects
                     let distance = object1.position.distance(object2.position);
@@ -44,5 +45,17 @@ class Logic {
                 }
             }
         }
+    }
+
+    Simulate() {
+        for (let object of this.#objects) { // Create new cloned instances
+            this.#simulation.push(Object.clone(object));
+        }
+        this.#running = true;
+    }
+
+    Quit() {
+        this.#running = false;
+        this.#simulation = [];
     }
 }
