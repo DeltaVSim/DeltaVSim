@@ -1,0 +1,9 @@
+* {
+    --primary: 000000;
+    --secondary: F5B553;
+    --alternative: F7F7F7;
+    --other: 854836;
+}
+body {
+    background-color: aliceblue;
+}
