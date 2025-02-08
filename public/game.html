@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>PID Rocket Simulator</title>
+        <style>
+            
+        </style>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <div id="scene-container">
+            <!-- I will have the scene be rendered here-->
+        </div>
+
+        <div class="menu-bar">
+            <div onclick="window.location.href='index.html'">Home</div>
+            <div onclick="toggleMenu('scenario-selector')">Change Scenario</div>
+            <div onclick="toggleMenu('ide')">Open IDE</div>
+        </div>
+
+        <div class="menu scenario-selector">
+            <span class="close-btn" onclick="toggleMenu('scenario-selector')">×</span>
+            <h3>Select Scenario</h3>
+            <select>
+                <option value="1">Scenario 1</option>
+                <option value="2">Scenario 2</option>
+                <option value="3">Scenario 3</option>
+            </select>
+        </div>
+
+        <div class="menu ide">
+            <span class="close-btn" onclick="toggleMenu('ide')">×</span>
+            <h3>PID Control Code</h3>
+            <textarea spellcheck="false" placeholder="Enter your PID control code here..."></textarea>
+        </div>
+
+        <button class="run-button">Run Simulation</button>
+
+        <script>
+            function toggleMenu(menuClass) {
+                const menus = document.querySelectorAll('.menu');
+                menus.forEach(menu => {
+                    if (menu.classList.contains(menuClass)) {
+                        menu.style.display = menu.style.display === 'none' || menu.style.display === '' ? 'block' : 'none';
+                    } else {
+                        menu.style.display = 'none';
+                    }
+                });
+            }
+        </script>
+    </body>
+</html>
