@@ -19,13 +19,15 @@ body {
     overflow-x: hidden;
     color: var(--secondary);
 }
+
 .title {
+    display:block;
     padding: 40px 60px;
     text-align: center;
     width: 50%;
     margin: 0 auto;
     overflow: hidden;
-    font-size: 3rem
+    font-size: 1000px;
 }
 
 .coolBorder {
@@ -42,3 +44,7 @@ body {
     overflow: hidden;
 }
 
+.notification {
+    display:block;
+    color:var(--other);
+}
