@@ -50,7 +50,7 @@ body {
 }
 
 /* used github copilot to generate some css and element sizing formatting below */
-#scene-container {
+#canvas {
     width: 100%;
     height: 100%;
     position: absolute;

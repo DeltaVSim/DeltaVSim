@@ -3,43 +3,35 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>PID Simulator</title>
-        <style>
-            
-        </style>
+        <title>Delta-V Sim</title>
         <link rel="stylesheet" href="styles.css">
     </head>
     <body>
-        <canvas id="scene-container">
-            <!-- I will have the scene be rendered here-->
-        </canvas>
+        <!-- Canvas for rendering -->
+        <canvas id="canvas"></canvas>
 
+        <!-- Bottom navbar -->
         <div class="menu-bar">
             <div onclick="window.location.href='index.html'">Home</div>
             <div onclick="window.location.href='levels.html'">Levels</div>
             <div onclick="toggleMenu('ide')">IDE</div>
         </div>
 
-        <div class="menu scenario-selector">
-            <span class="close-btn" onclick="toggleMenu('scenario-selector')">×</span>
-            <h3>Select Scenario</h3>
-            <select>
-                <option value="1">Earth</option>
-                <option value="2">Moon</option>
-                <option value="3">Mars</option>
-                <option value="4">Jupiter</option>
-                <option value="5">Europa</option>
-                <option value="5">Uranus</option>
-            </select>
-        </div>
-
+        <!-- User IDE -->
         <div class="menu ide">
             <span class="close-btn" onclick="toggleMenu('ide')">×</span>
             <h3>PID Control Code</h3>
             <textarea spellcheck="false" placeholder="Enter your PID control code here..."></textarea>
         </div>
 
+        <!-- Simulation button -->
         <button class="run-button">Run</button>
+
+        <!-- Logic Script -->
+        <script src="logic.js"></script>
+
+        <!-- App Script -->
+        <script src="app.js"></script>
 
         <script>
             function toggleMenu(menuClass) {
