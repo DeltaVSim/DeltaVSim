@@ -3,30 +3,33 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>PID Rocket Simulator</title>
+        <title>PID Simulator</title>
         <style>
             
         </style>
         <link rel="stylesheet" href="styles.css">
     </head>
     <body>
-        <div id="scene-container">
+        <canvas id="scene-container">
             <!-- I will have the scene be rendered here-->
-        </div>
+        </canvas>
 
         <div class="menu-bar">
             <div onclick="window.location.href='index.html'">Home</div>
-            <div onclick="toggleMenu('scenario-selector')">Change Scenario</div>
-            <div onclick="toggleMenu('ide')">Open IDE</div>
+            <div onclick="window.location.href='levels.html'">Levels</div>
+            <div onclick="toggleMenu('ide')">IDE</div>
         </div>
 
         <div class="menu scenario-selector">
             <span class="close-btn" onclick="toggleMenu('scenario-selector')">×</span>
             <h3>Select Scenario</h3>
             <select>
-                <option value="1">Scenario 1</option>
-                <option value="2">Scenario 2</option>
-                <option value="3">Scenario 3</option>
+                <option value="1">Earth</option>
+                <option value="2">Moon</option>
+                <option value="3">Mars</option>
+                <option value="4">Jupiter</option>
+                <option value="5">Europa</option>
+                <option value="5">Uranus</option>
             </select>
         </div>
 
@@ -36,16 +39,19 @@
             <textarea spellcheck="false" placeholder="Enter your PID control code here..."></textarea>
         </div>
 
-        <button class="run-button">Run Simulation</button>
+        <button class="run-button">Run</button>
 
         <script>
             function toggleMenu(menuClass) {
                 const menus = document.querySelectorAll('.menu');
                 menus.forEach(menu => {
                     if (menu.classList.contains(menuClass)) {
-                        menu.style.display = menu.style.display === 'none' || menu.style.display === '' ? 'block' : 'none';
+                        menu.style.setProperty('display', 
+                            menu.style.display === 'none' || menu.style.display === '' ? 'block' : 'none', 
+                            'important'
+                        );
                     } else {
-                        menu.style.display = 'none';
+                        menu.style.setProperty('display', 'none', 'important');
                     }
                 });
             }
