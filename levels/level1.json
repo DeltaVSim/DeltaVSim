@@ -1,10 +1,7 @@
 {
     "objects" : 
         [{"mass" : 1000, "position" : {"x" : -700, "y" : -300 }, "radius" : 100, "texture" : "earth.png", "target" : false}, 
-        {"mass" : 10 , "position" : {"x" : -300, "y" : 200 }, "radius" : 12, "texture" : "moon.png", "target" : true}, 
-        {"mass" : 2 , "position" : {"x" : -500, "y" : -200 }, "radius" : 10, "texture" : "asteroid.png", "target" : false},
-        {"mass" : 1.7 , "position" : {"x" : -200, "y" : 250 }, "radius" : 5, "texture" : "asteroid.png", "target" : false},
-        {"mass" : 2.1 , "position" : {"x" : -600, "y" : -300 }, "radius" : 7, "texture" : "asteroid.png", "target" : false}], 
+        {"mass" : 10 , "position" : {"x" : -500, "y" : -300 }, "radius" : 12, "texture" : "moon.png", "target" : true}], 
 
     "rocket" : 
         {"position" : {"x" : -700, "y" : -200}, "fuel" : 50}
