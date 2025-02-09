@@ -26,7 +26,7 @@ class Logic {
         this.#camera.position = this.#rocket.position.clone;
     }
 
-    Update(timestamp) {
+    async Update(timestamp) {
         if (timestamp - this.#lastUpdate < this.#timestep) { return; } // Early exit
         this.#lastUpdate = timestamp;
 
@@ -69,10 +69,15 @@ class Logic {
                             else if (object2 == this.#simRocket) { ourBoy = object2.position; notOurBoy = object1.position; }
                             if (ourBoy != null) { // Rocket specific collision
                                 const normalAngle = Math.atan((notOurBoy.y - ourBoy.y) / (notOurBoy.x - ourBoy.x)) * (180 / Math.PI);
-                                console.log(normalAngle)
                                 if (Math.abs(normalAngle - this.#simRocket.rotation) > 30) { // Crashed (not around 90)
                                     //this.#simRocket.exploded = true;
                                     //explosion = true;
+                                }
+                                else { // Landed safely and won!
+                                    console.log("You win!")
+                                    await fetch("/gameOver", {
+                                        method: "GET", headers: {  },
+                                    });
                                 }
                             }
 
