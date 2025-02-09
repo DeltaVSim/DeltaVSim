@@ -55,12 +55,42 @@
             window.Transpile = Transpile
         </script>
 
-        <!-- Styling Javascript -->
-        <script type="text/javascript">
+        <!-- Welcome popup -->
+        <div class="welcome-popup menu">
+            <span class="close-btn" onclick="closeWelcomePopup()">×</span>
+            <h2>Welcome to DeltaVSim!</h2>
+            <div class="welcome-content">
+                <h3>How to Play</h3>
+                <ul>
+                    <li>🎯 Goal: Navigate your rocket from the starting position to the landing zone</li>
+                    <li>💻 Write your PID control algorithm in the IDE (click IDE button)</li>
+                    <li>🚀 Control left and right thrusters to turn and move</li>
+                    <li>🛑 Don't hit any obstacles along the way</li>
+                    <li>🌟 Land smoothly and gently to succeed</li>
+                </ul>
+                <div class="tip">
+                    <strong>Pro Tip:</strong> Start with small thrust adjustments and watch your fuel!
+                </div>
+                <button class="start-btn" onclick="closeWelcomePopup()">Let's Begin!</button>
+            </div>
+        </div>
+
+        <script>
+            // Welcome popup script
+            window.addEventListener('load', function() {
+                document.querySelector('.welcome-popup').style.setProperty('display', 'block', 'important');
+            });
+
+            function closeWelcomePopup() {
+                document.querySelector('.welcome-popup').style.setProperty('display', 'none', 'important');
+            }
+
+            // Menu bar script
             function toggleMenu(menuClass) {
                 const menus = document.querySelectorAll('.menu');
                 menus.forEach(menu => {
                     if (menu.classList.contains(menuClass)) {
+                        // Line below was debugged with the help of GitHub Copilot
                         menu.style.setProperty('display', 
                             menu.style.display === 'none' || menu.style.display === '' ? 'block' : 'none', 
                             'important'
