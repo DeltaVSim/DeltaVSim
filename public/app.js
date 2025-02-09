@@ -12,12 +12,12 @@ async function init() {
     // Generate shaders and frame method
     frame = CreateShaders(canvas, gl);
 
-    // FETCH JSON SCENARIO
-    let scenario;
+    // Fetch scenario
+    let scenario; const params = new URLSearchParams(document.location.search);
     await fetch("/getLevel", {
         method: "POST", headers: { "Content-type": "application/json" },
         body: JSON.stringify({
-            level: this.href.substring(this.href.lastIndexOf('/') + 1)
+            level: params.get("level")
         })
     }).then((res) => res.json()).then((res) => scenario = res);
 
@@ -27,7 +27,6 @@ async function init() {
     //    "rocket" : 
     //        {"position" : {"x" : 0, "y" : 0}, "fuel" : 50}
     //}
-    // FETCH PLEASE
 
     logic = new Logic(scenario, canvas.width, canvas.height);
 

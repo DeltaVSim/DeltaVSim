@@ -23,6 +23,7 @@ class Logic {
         const dict = scenario["rocket"];
         this.#rocket = new Rocket(new Vector2(dict.position.x, dict.position.y), scenario["rocket"].fuel);
         this.#camera = new Camera(resX, resY);
+        this.#camera.position = this.#rocket.position.clone;
     }
 
     Update(timestamp) {
