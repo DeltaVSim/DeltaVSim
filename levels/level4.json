@@ -7,5 +7,5 @@
 
 
     "rocket" : 
-        [{"position" : {"x" : -700, "y" : -288}, "fuel" : 85}]
+        {"position" : {"x" : -700, "y" : -288}, "fuel" : 85}
 } 
