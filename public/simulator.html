@@ -21,7 +21,32 @@
         <div class="menu ide">
             <span class="close-btn" onclick="toggleMenu('ide')">×</span>
             <h3>PID Control Code</h3>
-            <textarea id="ide" spellcheck="false" placeholder="Enter your PID control code here..."></textarea>
+            <div class="ide-container">
+                <textarea spellcheck="false" placeholder="Enter your PID control code here..."></textarea>
+                
+                <!-- New Info Section -->
+                <div class="info-section">
+                    <h3>Objects & Their Methods</h3>
+                    <h4>Rocket</h4>
+                    <ul>
+                        <li><strong>-left(int)</strong>: Set left thrust (-100 to 100)</li>
+                        <li><strong>-right(int)</strong>: Set right thrust (-100 to 100)</li>
+                        <li><strong>-mass()</strong>: Returns the mass of the rocket (int)</li>
+                        <li><strong>-radius()</strong>: Returns the radius of the rocket (int)</li>
+                        <li><strong>-fuel()</strong>: Returns fuel level (0 to 100)</li>
+                        <li><strong>-position()</strong>: Returns current position as ints (x, y)</li>
+                        <li><strong>-velocity()</strong>: Returns current velocity (m/s)</li>
+                        <li><strong>-acceleration()</strong>: Returns current acceleration (m/s²)</li>
+                        <li><strong>-rotation()</strong>: Returns rotation in degrees (0-360)</li>
+                    </ul>
+                    <h4>Target</h4>
+                    <ul>
+                        <li><strong>-radius</strong>: Radius in meters (int)</li>
+                        <li><strong>-mass</strong>: Mass of the target (int)</li>
+                        <li><strong>-position()</strong>: Returns position (x, y)</li>
+                    </ul>
+                </div>
+            </div>
         </div>
 
         <!-- Simulation button -->
@@ -64,7 +89,7 @@
                 <h3>How to Play</h3>
                 <ul>
                     <li>🎯 Goal: Navigate your rocket from the starting position to the landing zone</li>
-                    <li>💻 Write your PID control algorithm in the IDE (click IDE button)</li>
+                    <li>💻 Write your PID control algorithm in the IDE (in Python)</li>
                     <li>🚀 Control left and right thrusters to turn and move</li>
                     <li>🛑 Don't hit any obstacles along the way</li>
                     <li>🌟 Land smoothly and gently to succeed</li>
