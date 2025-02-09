@@ -14,32 +14,32 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh; /* Use min-height to ensure full viewport coverage */
+    min-height: 100vh;
     width: 100%;
-    margin: 0; /* Remove default margin */
+    margin: 0; 
     overflow-x: hidden;
     color: var(--other);
 }
 
 .title {
     display: block;
-    padding: 2.5em 3.75em; /* Use em for padding */
+    padding: 2.5em 3.75em; 
     text-align: center;
     width: 50%;
     margin: 0 auto;
     overflow: hidden;
-    font-size: 10vw; /* Use vw for font size */
+    font-size: 10vw; 
 }
 
 .coolBorder {
     display: block;
-    padding: 2.5em 3.75em; /* Use em for padding */
-    border: 0.3125em solid var(--other); /* Use em for border */
-    border-radius: 1.25em; /* Use em for border-radius */
+    padding: 2.5em 3.75em; 
+    border: 0.3125em solid var(--other); 
+    border-radius: 1.25em; 
     background-color: var(--secondary);
     text-align: center;
     width: 100%;
-    max-width: 37.5em; /* Use em for max-width */
+    max-width: 37.5em;
     margin: 0 auto;
     overflow: hidden;
 }
@@ -49,7 +49,7 @@ body {
     color: var(--other);
 }
 
-/* used github copilot to generate some css and element sizing formatting below */
+/* Used Github Copilot to generate some css and element sizing formatting below */
 #canvas {
     width: 100%;
     height: 100%;
@@ -66,7 +66,7 @@ body {
     background-color: var(--secondary);
     border-radius: 0.625em;
     padding: 1.5em;
-    display: none !important; /* Assistant-enhanced menu and IDE styles */
+    display: none !important;
     z-index: 1000;
     min-width: 31.25em;
     box-shadow: 0 0.5em 2em rgba(0, 0, 0, 0.3);
@@ -81,7 +81,7 @@ body {
     letter-spacing: 0.1em;
 }
 
-/* Assistant-enhanced menu bar styles */
+/* Assistant-enhanced menu-bar style */
 .menu-bar {
     position: fixed;
     bottom: 1.25em;
@@ -187,7 +187,7 @@ body {
     box-shadow: 0 0 0 2px rgba(255, 117, 23, 0.2);
 }
 
-/* Assistant-created run button styles */
+/* Assistant-created run button style */
 #play {
     position: fixed;
     bottom: 1.25em;
@@ -213,7 +213,7 @@ body {
     box-shadow: 0 0.4em 1.2em rgba(0, 0, 0, 0.3);
 }
 
-/* Assistant-created levels page styles */
+/* Assistant-created level-container style */
 .levels-container {
     padding: 2em;
     width: 100%;
@@ -239,7 +239,7 @@ body {
     margin-bottom: 2em;
 }
 
-/* Assistant-created level card styles with enhanced hover effects */
+/* Assistant-created level card hover effect */
 .level-card {
     position: relative;
     border-radius: 1em;
@@ -299,20 +299,7 @@ body {
     opacity: 0.9;
 }
 
-/* placeholderfor images */
-.level-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: var(--secondary);
-    border-radius: 1em;
-    z-index: -1;
-}
-
-/* Assistant-created responsive adjustments */
+/* Assistant-created responsive adjustment */
 @media (max-width: 768px) {
     .levels-grid {
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -336,7 +323,6 @@ body {
     }
 }
 
-/* Assistant-created home page styles */
 .home-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -498,5 +484,91 @@ body {
         left: 1em;
         width: 40px;
         height: 40px;
+    }
+}
+
+/* Assistant-created welcome popup style */
+.welcome-popup {
+    max-width: 600px !important;
+    background-color: var(--secondary) !important;
+    color: var(--other);
+}
+
+.welcome-popup h2 {
+    color: var(--alternative);
+    font-size: 2em;
+    margin-bottom: 1em;
+    text-align: center;
+}
+
+.welcome-content {
+    padding: 1em;
+}
+
+.welcome-content h3 {
+    color: var(--alternative);
+    margin-bottom: 1em;
+    font-size: 1.3em;
+}
+
+.welcome-content ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 2em;
+}
+
+.welcome-content li {
+    margin-bottom: 1em;
+    padding-left: 1em;
+    position: relative;
+    line-height: 1.4;
+}
+
+.tip {
+    background-color: var(--secondary);
+    padding: 1em;
+    border-radius: 0.5em;
+    margin-bottom: 2em;
+    border: 1px solid var(--alternative);
+}
+
+.tip strong {
+    color: var(--alternative);
+}
+
+/* Same style as run button */
+.start-btn {
+    background-color: var(--alternative);
+    color: var(--other);
+    border: none;
+    padding: 0.8em 2em;
+    border-radius: 2em;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: block;
+    margin: 0 auto;
+    width: fit-content;
+}
+
+.start-btn:hover {
+    background-color: var(--other);
+    color: var(--secondary);
+    transform: translateY(-2px);
+}
+
+/* Responsive adjustments for welcome popup */
+@media (max-width: 768px) {
+    .welcome-popup {
+        max-width: 90% !important;
+        margin: 1em;
+    }
+
+    .welcome-popup h2 {
+        font-size: 1.5em;
+    }
+
+    .welcome-content h3 {
+        font-size: 1.2em;
     }
 }
