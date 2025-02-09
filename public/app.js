@@ -13,12 +13,20 @@ async function init() {
     frame = CreateShaders(canvas, gl);
 
     // FETCH JSON SCENARIO
-    const scenario = {
-        "objects" : 
-            [{"mass" : 1, "position" : {"x" : 100, "y" : 100 }, "radius" : 2, "texture" : "moon.png", "target": true}], 
-        "rocket" : 
-            {"position" : {"x" : 0, "y" : 0}, "fuel" : 50}
-    }
+    let scenario;
+    await fetch("/getLevel", {
+        method: "POST", headers: { "Content-type": "application/json" },
+        body: JSON.stringify({
+            level: this.href.substring(this.href.lastIndexOf('/') + 1)
+        })
+    }).then((res) => res.json()).then((res) => scenario = res);
+
+    //const scenario = {
+    //    "objects" : 
+    //        [{"mass" : 1, "position" : {"x" : 100, "y" : 100 }, "radius" : 2, "texture" : "moon.png", "target": true}], 
+    //    "rocket" : 
+    //        {"position" : {"x" : 0, "y" : 0}, "fuel" : 50}
+    //}
     // FETCH PLEASE
 
     logic = new Logic(scenario, canvas.width, canvas.height);
