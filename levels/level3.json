@@ -1,13 +1,13 @@
 {
     "objects" : 
-        [{"mass" : 10, "position" : {"x" : -700, "y" : -300 }, "radius" : 12, "model" : "mars.json"}, 
-        {"mass" : 8.03 , "position" : {"x" : 300, "y" : 400 }, "radius" : 33, "model" : "europa.json"}, 
-        {"mass" : 1.7 , "position" : {"x" : -250, "y" : -100 }, "radius" : 10, "model" : "asteroid.json"},
-        {"mass" : 2 , "position" : {"x" : -400, "y" : 400 }, "radius" : 5, "model" : "asteroid.json"},
-        {"mass" : 2 , "position" : {"x" : -100, "y" : 125 }, "radius" : 7, "model" : "asteroid.json"}, 
-        {"mass" : 2 , "position" : {"x" : 250, "y" : -300 }, "radius" : 12, "model" : "asteroid.json"}], 
+        [{"mass" : 106.99, "position" : {"x" : -700, "y" : -300 }, "radius" : 33, "texture" : "mars.png"}, 
+        {"mass" : 815 , "position" : {"x" : 0, "y" : 400 }, "radius" : 95, "texture" : "venus.png"}, 
+        {"mass" : 3 , "position" : {"x" : -250, "y" : -100 }, "radius" : 10, "texture" : "asteroid.png"},
+        {"mass" : 2.1 , "position" : {"x" : -400, "y" : 400 }, "radius" : 5, "texture" : "asteroid.png"},
+        {"mass" : 0.99 , "position" : {"x" : -100, "y" : 125 }, "radius" : 7, "texture" : "asteroid.png"}, 
+        {"mass" : 3.98 , "position" : {"x" : 250, "y" : -300 }, "radius" : 12, "texture" : "asteroid.png"}], 
 
 
     "rocket" : 
-        [{"position" : {"x" : -700, "y" : -288}, "fuel" : 85}]
+        [{"position" : {"x" : -700, "y" : -288}, "fuel" : 70}]
 } 
