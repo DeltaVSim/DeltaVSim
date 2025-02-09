@@ -4,7 +4,6 @@ class Logic {
     #rocket; #objects = [];
     #simRocket = null; #simObjects = [];
     #rocketCode = ""; #target = null;
-    #rocketCode = ""; #target = null;
 
     // Simulation State
     #timestep = 16;
@@ -14,21 +13,16 @@ class Logic {
 
     // Physics
     #gravityConstant = 0.0674;
-    #gravityConstant = 0.0674;
 
     constructor(scenario, resX, resY) {
         for (const dict of scenario["objects"]) { // Loading the objects from json
-            const object = new Thingy(new Vector2(dict.position.x, dict.position.y), dict.radius, dict.mass, "assets/textures/" + dict.texture, dict.target);
             const object = new Thingy(new Vector2(dict.position.x, dict.position.y), dict.radius, dict.mass, "assets/textures/" + dict.texture, dict.target);
             this.#objects.push(object);
         }
 
         const dict = scenario["rocket"];
         this.#rocket = new Rocket(new Vector2(dict.position.x, dict.position.y), scenario["rocket"].fuel);
-        const dict = scenario["rocket"];
-        this.#rocket = new Rocket(new Vector2(dict.position.x, dict.position.y), scenario["rocket"].fuel);
         this.#camera = new Camera(resX, resY);
-        this.#camera.position = this.#rocket.position.clone;
         this.#camera.position = this.#rocket.position.clone;
     }
 
@@ -38,10 +32,6 @@ class Logic {
 
         if (!this.#running) { return; } // Early exit
         
-        // Run simulator program
-        Transpile(this.#rocketCode, this.#simRocket, this.#target);
-
-        // Calculate physics (gravitational force and collisions)
         // Run simulator program
         Transpile(this.#rocketCode, this.#simRocket, this.#target);
 
@@ -57,8 +47,6 @@ class Logic {
                         const object1 = object;
                         const object2 = objects[index];
 
-                        // Find distance between the two objects
-                        let distance = object1.position.distance(object2.position);
                         // Find distance between the two objects
                         let distance = object1.position.distance(object2.position);
 
@@ -118,9 +106,6 @@ class Logic {
 
     Simulate() {
         for (let object of this.#objects) { // Create new cloned instances
-            const clone = Thingy.clone(object);
-            if (clone.target) { this.#target = clone; }
-            this.#simObjects.push(clone);
             const clone = Thingy.clone(object);
             if (clone.target) { this.#target = clone; }
             this.#simObjects.push(clone);
@@ -209,7 +194,6 @@ class Thingy { // Everything set up in the scenario
 
     static clone(object) {
         let clone = new Thingy(object.position.clone, object.radius, object.mass, object.texture, object.target);
-        let clone = new Thingy(object.position.clone, object.radius, object.mass, object.texture, object.target);
         return clone;
     }
 }
@@ -235,14 +219,12 @@ class Rocket extends Thingy { // User controlled object
     }
 
     get left() { return this.#left; }
-    get left() { return this.#left; }
     set left(value) {
         this.#left = value;
         if (this.#left < -100) { this.#left = -100; }
         else if (this.#left > 100) { this.#left = 100; }
     }
 
-    get right() { return this.#right; }
     get right() { return this.#right; }
     set right(value) {
         this.#right = value;
