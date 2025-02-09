@@ -170,7 +170,7 @@ function Random(min, max) { // Inclusive, exclusive
 
 function AudioSource(source) { // Creates an audio element for playing sound effects
     audio = document.createElement("AUDIO");
-    audio.src = "Assets/Audio/" + source;
+    audio.src = "assets/audio/" + source;
     audio.type = 'audio/mpeg';
     audio.loop = false;
     audio.volume = 1;

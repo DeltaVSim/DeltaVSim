@@ -21,14 +21,14 @@ async function init() {
         })
     }).then((res) => res.json()).then((res) => scenario = res);
 
-    //const scenario = {
-    //    "objects" : 
-    //        [{"mass" : 1, "position" : {"x" : 100, "y" : 100 }, "radius" : 2, "texture" : "moon.png", "target": true}], 
-    //    "rocket" : 
-    //        {"position" : {"x" : 0, "y" : 0}, "fuel" : 50}
-    //}
-
+    // Create logic
     logic = new Logic(scenario, canvas.width, canvas.height);
+
+    // Load saved program
+    if (localStorage.getItem("pidCode") != null) {
+        logic.rocketCode = localStorage.getItem("pidCode");
+        document.getElementById("ide").value = logic.rocketCode;
+    }
 
     // Begin rendering
     RenderFrame();
@@ -36,6 +36,16 @@ async function init() {
     document.getElementById("play").onclick = SimulationMode;
     document.getElementById("ide").oninput = () => {
         logic.rocketCode = document.getElementById("ide").value;
+        localStorage.setItem("pidCode", logic.rocketCode);
+    }
+
+    window.onkeydown = (event) => {
+        if (event.key == "a") { logic.rocket.left = 100; }
+        if (event.key == "d") { logic.rocket.right = 100; }
+    }
+    window.onkeyup = (event) => {
+        if (event.key == "a") { logic.rocket.left = 0; }
+        if (event.key == "d") { logic.rocket.right = 0; }
     }
 }
 
@@ -61,7 +71,7 @@ document.getElementById("canvas").onmouseup = () => { mouseDown = false; }
 
 const moveScalar = 20;
 window.onmousemove = (event) => {
-    if (logic && !logic.running && mouseDown) {
+    if (logic && mouseDown) {
         logic.camera.position = logic.camera.position.add(new Vector2(-event.movementX / moveScalar, event.movementY / moveScalar));
     }
 }

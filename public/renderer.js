@@ -32,7 +32,7 @@ function CreateShaders(canvas, gl) {
         const pos = camera.position;
 
         // Arg 1 = position, Arg 2 = look at, Arg 3 = up
-        glMatrix.mat4.lookAt(matView, glMatrix.vec3.fromValues(pos.x, pos.y, 30),
+        glMatrix.mat4.lookAt(matView, glMatrix.vec3.fromValues(pos.x, pos.y, 50),
             glMatrix.vec3.fromValues(pos.x, pos.y, 0),
             glMatrix.vec3.fromValues(0, 1, 0));
 

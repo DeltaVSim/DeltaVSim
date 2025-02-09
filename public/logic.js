@@ -41,27 +41,67 @@ class Logic {
             for (const object of objects) {
                 object.relocate(); // Update position of object
                 for (let index = objects.indexOf(object); index < objects.length; index++) {
-                    if (objects[index] != object) {
+                    if (objects[index] != object && !object.exploded && !objects[index].exploded) {
 
                         // Localize the two objects
-                        let object1 = object;
-                        let object2 = objects[index];
+                        const object1 = object;
+                        const object2 = objects[index];
 
                         // Find distance between the two objects
                         let distance = object1.position.distance(object2.position);
 
                         // Apply gravitational force (G * (m1 * m2) / r^2)
-                        let force = this.#gravityConstant * (object1.mass * object2.mass) / (distance ** 2);
+                        const force = this.#gravityConstant * (object1.mass * object2.mass) / (distance ** 2);
 
                         // Apply forces to the two objects
                         object1.impulse(object2.position.subtract(object1.position).divide(distance).multiply(force));
                         object2.impulse(object1.position.subtract(object2.position).divide(distance).multiply(force));
+
+                        // Calculate collisions
+                        if (distance < (object1.radius + object2.radius)) {
+                            let explosion = false; const max = 0.1;
+                            if (object1.mass < object2.mass && Math.abs(object1.velocity.x) + Math.abs(object1.velocity.y) > max) { object1.exploded = true; explosion = true; }
+                            else if (object1.mass > object2.mass && Math.abs(object2.velocity.x) + Math.abs(object2.velocity.y) > max) { object2.exploded = true; explosion = true; }
+                            else if (Math.abs(object1.velocity.x) + Math.abs(object1.velocity.y) > max || distance == 0) { object1.exploded = true; object2.exploded = true; explosion = true; }
+
+                            let ourBoy = null; let notOurBoy = null;
+                            if (object1 == this.#simRocket) { ourBoy = object1.position; notOurBoy = object2.position; }
+                            else if (object2 == this.#simRocket) { ourBoy = object2.position; notOurBoy = object1.position; }
+                            if (ourBoy != null) { // Rocket specific collision
+                                const normalAngle = Math.atan((notOurBoy.y - ourBoy.y) / (notOurBoy.x - ourBoy.x)) * (180 / Math.PI);
+                                console.log(normalAngle)
+                                if (Math.abs(normalAngle - this.#simRocket.rotation) > 30) { // Crashed (not around 90)
+                                    //this.#simRocket.exploded = true;
+                                    //explosion = true;
+                                }
+                            }
+
+                            if (explosion) { AudioSource("explosion.mp3"); }
+                            else { // Push back
+                                while (distance < (object1.radius + object2.radius)**2) {
+                                    if (object1.mass < object2.mass) {
+                                        object1.position = object1.position.add(object1.position.subtract(object2.position).multiply(0.0001));
+                                        object1.velocity = new Vector2();
+                                    }
+                                    else if (object1.mass > object2.mass) {
+                                        object2.position = object2.position.add(object2.position.subtract(object1.position).multiply(0.0001));
+                                        object2.velocity = new Vector2();
+                                    }
+                                    else {
+                                        object1.position = object1.position.add(object1.position.subtract(object2.position).unit.multiply(0.00005));
+                                        object2.position = object2.position.add(object2.position.subtract(object1.position).unit.multiply(0.00005));
+                                        object1.velocity = new Vector2(); object2.velocity = new Vector2();
+                                    }
+
+                                    distance = (object1.position.x - object2.position.x)**2;
+                                    distance += ((object1.position.y - object2.position.y)**2);
+                                }
+                            }
+                        }
                     }
                 }
             }
         }
-
-        this.#camera.position = this.#simRocket.position;
     }
 
     Simulate() {
@@ -98,6 +138,10 @@ class Logic {
     }
 
     get camera() { return this.#camera; }
+    get rocket() {
+        if (this.#running) { return this.#simRocket; }
+        else { return this.#rocket; }
+    }
     get running() { return this.#running; }
     get rocketCode() { return this.#rocketCode; }
     set rocketCode(value) { this.#rocketCode = value; }
@@ -110,6 +154,7 @@ class Thingy { // Everything set up in the scenario
     model; texture;
     radius; mass;
 
+    exploded;
     target;
 
     constructor(position, radius, mass, texture, target = false) {
@@ -123,11 +168,13 @@ class Thingy { // Everything set up in the scenario
         this.rotation = 90;
         this.velocity = new Vector2();
         this.acceleration = new Vector2();
+        this.exploded = false;
 
         CreateRenderer(this);
     }
 
     relocate() { // Relocates the thingy
+        if (this.exploded) { return; }
         this.velocity = this.velocity.add(this.acceleration);
         this.position = this.position.add(this.velocity);
     }
@@ -150,7 +197,7 @@ class Rocket extends Thingy { // User controlled object
     constructor(position, fuel) {
         super(position, 1, 1); // Radius is 1 and mass is 1
         this.fuel = fuel;
-        this.thrust = 1; // Maximum thrust power
+        this.thrust = 0.01; // Maximum thrust power
         this.left = 0; this.right = 0;
         this.texture = "assets/textures/rocket.png";
         this.model = "assets/models/rocket.json";
@@ -174,6 +221,7 @@ class Rocket extends Thingy { // User controlled object
 
     relocate() {
         // Calculate thrust power and apply force ------------------------------------ ACCOUNT FOR MASS IN THRUST FORCE
+        if (this.exploded) { return; }
         const radians = this.rotation * (Math.PI / 180);
         const leftThrust = new Vector2(Math.cos(radians), Math.sin(radians)).multiply(this.thrust * (this.#left / 100));
         const rightThrust = new Vector2(Math.cos(radians), Math.sin(radians)).multiply(this.thrust * (this.#right / 100));
@@ -181,9 +229,9 @@ class Rocket extends Thingy { // User controlled object
         this.velocity = this.velocity.add(this.acceleration);
         this.position = this.position.add(this.velocity);
 
-        // Calculate and apply torque (currently using arbitrary constant 10)
-        this.rotation -= 10 * (this.#left / 100);
-        this.rotation += 10 * (this.#right / 100);
+        // Calculate and apply torque (currently using arbitrary constant 3)
+        this.rotation -= 3 * (this.#left / 100);
+        this.rotation += 3 * (this.#right / 100);
 
         // Calculate fuel consumption
         this.fuel -= ((this.#left / 100) * 0.1 + (this.#right / 100) * 0.1);
