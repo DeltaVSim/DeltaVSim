@@ -21,7 +21,7 @@
         <div class="menu ide">
             <span class="close-btn" onclick="toggleMenu('ide')">×</span>
             <h3>PID Control Code</h3>
-            <textarea spellcheck="false" placeholder="Enter your PID control code here..."></textarea>
+            <textarea id="ide" spellcheck="false" placeholder="Enter your PID control code here..."></textarea>
         </div>
 
         <!-- Simulation button -->
@@ -49,8 +49,9 @@
             from browser import alert, document, html, window
             import random
 
-            def Transpile(script):
-                eval(script)
+            def Transpile(script, rocket, target):
+                if script != "": # Not empty
+                    exec(script)
 
             window.Transpile = Transpile
         </script>
