@@ -1,0 +1,14 @@
+{
+    "objects" : 
+        [{"mass" : 8.03, "position" : {"x" : -700, "y" : -300 }, "radius" : 12, "texture" : "europa.png"}, 
+        {"mass" : 22.5 , "position" : {"x" : 400, "y" : 300 }, "radius" : 52.3, "texture" : "titan.png"}, 
+        {"mass" : 3 , "position" : {"x" : 0, "y" : 0 }, "radius" : 5.1, "texture" : "asteroid.png"},
+        {"mass" : 1.6, "position" : {"x" : -300, "y" : -150 }, "radius" : 4.7, "texture" : "asteroid.png"},
+        {"mass" : 2.1 , "position" : {"x" : 200, "y" : 250 }, "radius" : 8, "texture" : "asteroid.png"},
+        {"mass" : 1.9 , "position" : {"x" : -600, "y" : -100 }, "radius" : 9, "texture" : "asteroid.png"}],
+
+
+
+    "rocket" : 
+        [{"position" : {"x" : -700, "y" : -288}, "fuel" : 90}]
+} 

@@ -58,7 +58,6 @@ body {
     left: 0;
 }
 
-/* Assistant-enhanced menu and IDE styles */
 .menu, .ide, .scenario-selector {
     position: fixed;
     top: 50%;
@@ -67,7 +66,7 @@ body {
     background-color: var(--secondary);
     border-radius: 0.625em;
     padding: 1.5em;
-    display: none !important;
+    display: none !important; /* Assistant-enhanced menu and IDE styles */
     z-index: 1000;
     min-width: 31.25em;
     box-shadow: 0 0.5em 2em rgba(0, 0, 0, 0.3);
@@ -157,7 +156,6 @@ body {
     box-shadow: 0 0 0 2px rgba(255, 117, 23, 0.2);
 }
 
-/* Assistant-created IDE styles */
 .ide {
     min-width: 50em;
     min-height: 40em;
@@ -301,7 +299,7 @@ body {
     opacity: 0.9;
 }
 
-/* Add placeholder styles for when images haven't loaded */
+/* placeholderfor images */
 .level-card::before {
     content: '';
     position: absolute;
@@ -335,5 +333,170 @@ body {
 
     .level-info p {
         font-size: 0.8em;
+    }
+}
+
+/* Assistant-created home page styles */
+.home-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2em;
+    padding-bottom: 6em;
+    color: var(--other);
+}
+
+.section {
+    text-align: center;
+    margin-bottom: 4em;
+}
+
+.section h1 {
+    font-size: 4em;
+    color: var(--alternative);
+    margin-bottom: 0.2em;
+    letter-spacing: 0.1em;
+}
+
+.tagline {
+    font-size: 1.5em;
+    color: var(--other);
+    opacity: 0.9;
+}
+
+.info-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2em;
+    margin-bottom: 4em;
+}
+
+.info-card {
+    background-color: var(--secondary);
+    padding: 2em;
+    border-radius: 1em;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.info-card:hover {
+    transform: translateY(-0.5em);
+    box-shadow: 0 1em 2em rgba(0, 0, 0, 0.3);
+}
+
+.card-icon {
+    font-size: 3em;
+    margin-bottom: 0.5em;
+}
+
+.info-card h2 {
+    color: var(--alternative);
+    margin-bottom: 1em;
+    font-size: 1.5em;
+}
+
+.info-card p {
+    color: var(--other);
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+.feature-section {
+    text-align: center;
+    margin-top: 4em;
+    margin-bottom: 2em; 
+}
+
+.feature-section h2 {
+    color: var(--alternative);
+    font-size: 2em;
+    margin-bottom: 1.5em;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2em;
+}
+
+.feature {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+}
+
+.feature-number {
+    width: 3em;
+    height: 3em;
+    background-color: var(--alternative);
+    color: var(--primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.feature p {
+    color: var(--other);
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+/* Responsive adjustments for home page */
+@media (max-width: 768px) {
+    .hero-section h1 {
+        font-size: 3em;
+    }
+
+    .tagline {
+        font-size: 1.2em;
+    }
+
+    .info-cards {
+        gap: 1em;
+    }
+
+    .info-card {
+        padding: 1.5em;
+    }
+
+    .feature-section h2 {
+        font-size: 1.5em;
+    }
+}
+
+/* logo was made with Canva.com */
+.logo {
+    position: fixed;
+    top: 2em;
+    left: 2em;
+    z-index: 1000;
+    width: 60px;
+    height: 60px;
+    transition: transform 0.3s ease;
+}
+
+.logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.logo:hover {
+    transform: scale(1.1);
+}
+
+/* Responsive adjustment for logo */
+@media (max-width: 768px) {
+    .logo {
+        top: 1em;
+        left: 1em;
+        width: 40px;
+        height: 40px;
     }
 }

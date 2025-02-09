@@ -1,0 +1,11 @@
+{
+    "objects" : 
+        [{"mass" : 815, "position" : {"x" : -700, "y" : -300 }, "radius" : 95, "texture" : "venus.png"}, 
+        {"mass" : 8.03 , "position" : {"x" : 300, "y" : -200 }, "radius" : 12, "texture" : "europa.png"}, 
+        {"mass" : 1.7 , "position" : {"x" : -250, "y" : -100 }, "radius" : 6, "texture" : "asteroid.png"},
+        {"mass" : 2 , "position" : {"x" : 100, "y" : 250 }, "radius" : 4.1, "texture" : "asteroid.png"}],
+
+
+    "rocket" : 
+        [{"position" : {"x" : -700, "y" : -288}, "fuel" : 85}]
+} 

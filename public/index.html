@@ -6,22 +6,58 @@
     <link rel="stylesheet" href="styles.css">
     <title>DeltaVSim</title>
 </head>
-<body onclick="goto();">
-<div id="block">
-    <div class="top">
-        <h1>DeltaVSim</h1>
-        <p>Learn how to program PED rockets and explore the solar system! </p>
+<body>
+    <div class="logo">
+        <img src="assets/DeltaVSim.png" alt="DeltaVSim Logo">
     </div>
-    <div class="notification">
-        <h3>click anywhere to continue</h3>
+
+    <div class="home-container">
+        <div class="section">
+            <h1>DeltaVSim</h1>
+            <p class="tagline">Master Rocket Science Through Code</p>
+        </div>
+
+        <div class="info-cards">
+            <div class="info-card">
+                <div class="card-icon">🚀</div>
+                <h2>Learn PID Control</h2>
+                <p>Master the fundamentals of Proportional-Integral-Derivative control systems by programming real-time rocket landings.</p>
+            </div>
+
+            <div class="info-card">
+                <div class="card-icon">🌍</div>
+                <h2>Explore the Solar System</h2>
+                <p>Test your skills across different celestial bodies, each with unique gravitational challenges and atmospheric conditions.</p>
+            </div>
+
+            <div class="info-card">
+                <div class="card-icon">💻</div>
+                <h2>Code Your Way</h2>
+                <p>Write and test your own PID control algorithms in our interactive IDE, designed for both beginners and experts.</p>
+            </div>
+        </div>
+
+        <div class="feature-section">
+            <h2>How It Works</h2>
+            <div class="features">
+                <div class="feature">
+                    <span class="feature-number">1</span>
+                    <p>Choose a celestial body or level to test your landing skills</p>
+                </div>
+                <div class="feature">
+                    <span class="feature-number">2</span>
+                    <p>Write your PID control code in the built-in IDE</p>
+                </div>
+                <div class="feature">
+                    <span class="feature-number">3</span>
+                    <p>Run your simulation and perfect your landing algorithm</p>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+
+    <div class="menu-bar">
+        <div onclick="window.location.href='levels.html'">Get Started</div>
+    </div>
 </body>
-
-<script>
-    function goto(){
-        location.href = "/public/levels.html"
-    }
- </script>
-
 </html>
