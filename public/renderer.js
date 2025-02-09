@@ -9,7 +9,10 @@ function CreateShaders(canvas, gl) {
     const matWorldUniform = gl.getUniformLocation(shaderProgram, 'matWorld');
     const matViewProjUniform = gl.getUniformLocation(shaderProgram, 'matViewProj');
 
+    // Shader program and intactness uniform (EXPLOSIONS!)
     gl.useProgram(shaderProgram);
+    const intactnessUniformLocation = gl.getUniformLocation(shaderProgram, 'u_intactness');
+    gl.uniform1f(intactnessUniformLocation, 0.0);
 
     // Camera View + Projection
     const matView = glMatrix.mat4.create();
@@ -106,6 +109,8 @@ const vertexShaderSourceCode = `#version 300 es
     in vec2 vertexTexCoord;
     in vec3 vertexNormal;
 
+    uniform float u_intactness;
+
     out vec2 fragmentTexCoord;
     out vec3 fragmentNormal;
 
@@ -117,8 +122,8 @@ const vertexShaderSourceCode = `#version 300 es
 
         fragmentNormal = (matWorld * vec4(vertexNormal, 0.0)).xyz; // Normals in world space
 
-        gl_Position = matViewProj * matWorld * vec4(vertexPosition, 1.0);
-        //gl_Position = matViewProj * matWorld * vec4(vertexPosition + vertexNormal/5.0, 1.0);
+        //gl_Position = matViewProj * matWorld * vec4(vertexPosition, 1.0);
+        gl_Position = matViewProj * matWorld * vec4(vertexPosition + vertexNormal * u_intactness, 1.0);
     }`;
 
 const fragmentShaderSourceCode = `#version 300 es
@@ -154,6 +159,7 @@ class Renderer {
         this.texture = texture;
         this.vao = vao;
         this.numIndices = numIndices;
+        this.intactness = 0.0;
     }
 
     Render(gl, program) {
@@ -170,6 +176,10 @@ class Renderer {
         const scale = this.thingy.radius;
         glMatrix.vec3.set(this.#scaleVec, scale, scale, scale);
         glMatrix.mat4.fromRotationTranslationScale(this.#matWorld, this.#rotation, position, this.#scaleVec);
+
+        if (this.thingy.exploded) { this.intactness += 0.1; }
+        const intactnessUniformLocation = gl.getUniformLocation(program, 'u_intactness');
+        gl.uniform1f(intactnessUniformLocation, this.intactness);
 
         gl.uniformMatrix4fv(gl.getUniformLocation(program, 'matWorld'), false, this.#matWorld);
         gl.bindVertexArray(this.vao);
