@@ -15,7 +15,7 @@ async function init() {
     // FETCH JSON SCENARIO
     const scenario = {
         "objects" : 
-            [{"mass" : 100, "position" : {"x" : 10, "y" : 10 }, "radius" : 2, "texture" : "moon.png"}], 
+            [{"mass" : 100, "position" : {"x" : 10, "y" : 10 }, "radius" : 2, "texture" : "moon.png", "target": true}], 
         "rocket" : 
             {"position" : {"x" : 0, "y" : 0}, "fuel" : 50}
     }

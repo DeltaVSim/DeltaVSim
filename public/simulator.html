@@ -38,7 +38,25 @@
         <!-- App Script -->
         <script src="app.js"></script>
 
-        <script>
+        <!-- Brython Transpiler -->
+        <script src="https://cdn.jsdelivr.net/npm/brython@3.8.9/brython.min.js"></script>
+
+        <!-- Python Libraries -->
+        <script src="https://cdn.jsdelivr.net/npm/brython@3.8.9/brython_stdlib.js"></script>
+
+        <!-- Transpiler -->
+        <script type="text/python" id="transpiler">
+            from browser import alert, document, html, window
+            import random
+
+            def Transpile(script):
+                eval(script)
+
+            window.Transpile = Transpile
+        </script>
+
+        <!-- Styling Javascript -->
+        <script type="text/javascript">
             function toggleMenu(menuClass) {
                 const menus = document.querySelectorAll('.menu');
                 menus.forEach(menu => {
