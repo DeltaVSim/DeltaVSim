@@ -25,3 +25,7 @@ app.post('/getLevel', (req, res) => {
   const level = req.body.level;
   res.sendFile(path.join(__dirname, 'levels/level'+level+'.json'));
 })
+
+app.get('/gameOver', (req, res) => {
+  res.sendFile(path.join(__dirname, 'end.html'))
+})

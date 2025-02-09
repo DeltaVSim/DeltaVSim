@@ -76,7 +76,11 @@
 
             def Transpile(script, rocket, target):
                 if script != "": # Not empty
-                    exec(script)
+                    try:
+                        exec(script)
+                    except:
+                        alert("submitted code resulted in an error.")
+
 
             window.Transpile = Transpile
         </script>
