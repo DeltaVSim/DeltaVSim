@@ -3,7 +3,7 @@ class Logic {
     #camera;
     #rocket; #objects = [];
     #simRocket = null; #simObjects = [];
-    #rocketCode;
+    #rocketCode = ""; #target = null;
 
     // Simulation State
     #timestep = 16;
@@ -22,22 +22,17 @@ class Logic {
 
         const dict = scenario["rocket"];
         this.#rocket = new Rocket(new Vector2(dict.position.x, dict.position.y), scenario["rocket"].fuel);
-        this.rocketController = new RocketController(this.rocket);
         this.#camera = new Camera(resX, resY);
     }
 
     Update(timestamp) {
-        if (this.rocket.useQLearning) {
-            this.rocketController.updateLearning();
-        }
-
         if (timestamp - this.#lastUpdate < this.#timestep) { return; } // Early exit
         this.#lastUpdate = timestamp;
 
         if (!this.#running) { return; } // Early exit
         
         // Run simulator program
-        Transpile(this.#rocketCode, this.#rocket);
+        Transpile(this.#rocketCode, this.#simRocket, this.#target);
 
         // Calculate physics (gravitational force and collisions)
         const objects = this.thingys;
@@ -70,7 +65,9 @@ class Logic {
 
     Simulate() {
         for (let object of this.#objects) { // Create new cloned instances
-            this.#simObjects.push(Thingy.clone(object));
+            const clone = Thingy.clone(object);
+            if (clone.target) { this.#target = clone; }
+            this.#simObjects.push(clone);
         }
         this.#simRocket = Rocket.clone(this.#rocket);
         this.#running = true;
@@ -140,7 +137,7 @@ class Thingy { // Everything set up in the scenario
     }
 
     static clone(object) {
-        let clone = new Thingy(object.position.clone, object.radius, object.mass, object.texture);
+        let clone = new Thingy(object.position.clone, object.radius, object.mass, object.texture, object.target);
         return clone;
     }
 }
@@ -148,8 +145,6 @@ class Thingy { // Everything set up in the scenario
 class Rocket extends Thingy { // User controlled object
     fuel; thrust;
     #left; #right;
-    useQLearning;
-    controller;
 
     constructor(position, fuel) {
         super(position, 1, 1); // Radius is 1 and mass is 1
@@ -158,18 +153,18 @@ class Rocket extends Thingy { // User controlled object
         this.left = 0; this.right = 0;
         this.texture = "assets/textures/rocket.png";
         this.model = "assets/models/rocket.json";
-        this.useQLearning = false;
-        this.controller = new RocketController(this);
 
         CreateRenderer(this);
     }
 
+    get left() { return this.#left; }
     set left(value) {
         this.#left = value;
         if (this.#left < -100) { this.#left = -100; }
         else if (this.#left > 100) { this.#left = 100; }
     }
 
+    get right() { return this.#right; }
     set right(value) {
         this.#right = value;
         if (this.#right < -100) { this.#right = -100; }
@@ -178,25 +173,19 @@ class Rocket extends Thingy { // User controlled object
 
     relocate() {
         // Calculate thrust power and apply force ------------------------------------ ACCOUNT FOR MASS IN THRUST FORCE
+        const radians = this.rotation * (Math.PI / 180);
+        const leftThrust = new Vector2(Math.cos(radians), Math.sin(radians)).multiply(this.thrust * (this.#left / 100));
+        const rightThrust = new Vector2(Math.cos(radians), Math.sin(radians)).multiply(this.thrust * (this.#right / 100));
+        this.acceleration = leftThrust.add(rightThrust).divide(this.mass);
+        this.velocity = this.velocity.add(this.acceleration);
+        this.position = this.position.add(this.velocity);
 
-        if (this.useQLearning) {
-            this.rocketController.controlRocket();
-        } else {
-            const radians = this.rotation * (Math.PI / 180);
-            const leftThrust = new Vector2(Math.cos(radians), Math.sin(radians)).multiply(this.thrust * (this.#left / 100));
-            const rightThrust = new Vector2(Math.cos(radians), Math.sin(radians)).multiply(this.thrust * (this.#right / 100));
-            this.acceleration = leftThrust.add(rightThrust).divide(this.mass);
-            this.velocity = this.velocity.add(this.acceleration);
-            this.position = this.position.add(this.velocity);
+        // Calculate and apply torque (currently using arbitrary constant 10)
+        this.rotation -= 10 * (this.#left / 100);
+        this.rotation += 10 * (this.#right / 100);
 
-            // Calculate and apply torque (currently using arbitrary constant 10)
-            this.rotation -= 10 * (this.#left / 100);
-            this.rotation += 10 * (this.#right / 100);
-
-            // Calculate fuel consumption
-            this.fuel -= ((this.#left / 100) * 0.1 + (this.#right / 100) * 0.1);
-            console.log(this.fuel)
-        }
+        // Calculate fuel consumption
+        this.fuel -= ((this.#left / 100) * 0.1 + (this.#right / 100) * 0.1);
     }
 
     static clone(rocket) {

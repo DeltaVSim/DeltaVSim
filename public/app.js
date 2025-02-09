@@ -15,7 +15,7 @@ async function init() {
     // FETCH JSON SCENARIO
     const scenario = {
         "objects" : 
-            [{"mass" : 100, "position" : {"x" : 10, "y" : 10 }, "radius" : 2, "texture" : "moon.png", "target": true}], 
+            [{"mass" : 1, "position" : {"x" : 100, "y" : 100 }, "radius" : 2, "texture" : "moon.png", "target": true}], 
         "rocket" : 
             {"position" : {"x" : 0, "y" : 0}, "fuel" : 50}
     }
@@ -27,6 +27,9 @@ async function init() {
     RenderFrame();
 
     document.getElementById("play").onclick = SimulationMode;
+    document.getElementById("ide").oninput = () => {
+        logic.rocketCode = document.getElementById("ide").value;
+    }
 }
 
 function SimulationMode() { // Begin simulation
@@ -49,11 +52,13 @@ function RenderFrame(timestamp) {
 document.getElementById("canvas").onmousedown = () => { mouseDown = true; }
 document.getElementById("canvas").onmouseup = () => { mouseDown = false; }
 
-const moveScalar = 50;
+const moveScalar = 20;
 window.onmousemove = (event) => {
     if (logic && !logic.running && mouseDown) {
         logic.camera.position = logic.camera.position.add(new Vector2(-event.movementX / moveScalar, event.movementY / moveScalar));
     }
 }
 
-window.onload = init;
+window.onload = () => {
+    init(); brython();
+};
