@@ -21,7 +21,7 @@ app.listen(port, () => {
     res.sendFile(path.join(__dirname, 'public/simulator.html'));
   });
 
-  app.get('/getlevel', (req, res) => {
+  app.post('/getLevel', (req, res) => {
     console.log('/getlevel made from: ' + req.ip)
     const { level } = req.body;
     res.sendFile(path.join(__dirname, 'levels/level'+level+'.json'));
