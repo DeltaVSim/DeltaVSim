@@ -16,7 +16,7 @@ class Logic {
 
     constructor(scenario, resX, resY) {
         for (const dict of scenario["objects"]) { // Loading the objects from json
-            const object = new Thingy(new Vector2(dict.position.x, dict.position.y), dict.radius, dict.mass, "assets/textures/" + dict.texture);
+            const object = new Thingy(new Vector2(dict.position.x, dict.position.y), dict.radius, dict.mass, "assets/textures/" + dict.texture, dict.target);
             this.#objects.push(object);
         }
 
@@ -32,6 +32,10 @@ class Logic {
 
         if (!this.#running) { return; } // Early exit
         
+        // Run simulator program
+        Transpile(this.#rocketCode, this.#rocket);
+
+        // Calculate physics (gravitational force and collisions)
         const objects = this.thingys;
         for (let iteration = 0; iteration < this.#updatesPerFrame; iteration++) {
             for (const object of objects) {
@@ -104,11 +108,14 @@ class Thingy { // Everything set up in the scenario
     model; texture;
     radius; mass;
 
-    constructor(position, radius, mass, texture) {
+    target;
+
+    constructor(position, radius, mass, texture, target = false) {
         this.position = position;
         this.radius = radius;
         this.mass = mass;
         this.texture = texture;
+        this.target = target;
 
         this.model = "assets/models/planet.json";
         this.rotation = 90;
