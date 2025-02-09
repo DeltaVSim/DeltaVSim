@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 app.use(express.static('public'))
-port = 80
+port = 3000
 
 app.listen(port, () => {
     console.log(`DeltaVSim started on ${port}`);
