@@ -11,3 +11,9 @@ app.listen(port, () => {
     console.log('/ made from: ' + req.ip)
     res.sendFile(path.join(__dirname, 'public/index.html'));
   });
+
+  app.get('/getlevel', (req, res) => {
+    console.log('/getlevel made from: ' + req.ip)
+    const { level } = req.body;
+    res.sendFile(path.join(__dirname, 'levels/level'+level+'.json'));
+  })

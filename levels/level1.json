@@ -7,5 +7,5 @@
         {"mass" : 2.1 , "position" : {"x" : -600, "y" : -300 }, "radius" : 7, "texture" : "asteroid.png"}], 
 
     "rocket" : 
-        [{"position" : {"x" : -700, "y" : -200}, "fuel" : 50}]
+        {"position" : {"x" : -700, "y" : -200}, "fuel" : 50}
 } 
