@@ -1,5 +1,5 @@
 // Simulation Window and Logic
-let canvas; let gl; let logic; let frame;
+let canvas; let gl; let logic; let frame; let mouseDown = false;
 
 async function init() {
 
@@ -15,7 +15,7 @@ async function init() {
     // FETCH JSON SCENARIO
     const scenario = {
         "objects" : 
-            [{"mass" : 10, "position" : {"x" : -10, "y" : 50 }, "radius" : 2, "texture" : "moon.png"}], 
+            [{"mass" : 100, "position" : {"x" : 10, "y" : 10 }, "radius" : 2, "texture" : "moon.png"}], 
         "rocket" : 
             {"position" : {"x" : 0, "y" : 0}, "fuel" : 50}
     }
@@ -44,6 +44,16 @@ function RenderFrame(timestamp) {
     logic.Update(timestamp);
     frame(logic.camera, logic.thingys);
     requestAnimationFrame(RenderFrame);
+}
+
+document.getElementById("canvas").onmousedown = () => { mouseDown = true; }
+document.getElementById("canvas").onmouseup = () => { mouseDown = false; }
+
+const moveScalar = 50;
+window.onmousemove = (event) => {
+    if (logic && !logic.running && mouseDown) {
+        logic.camera.position = logic.camera.position.add(new Vector2(-event.movementX / moveScalar, event.movementY / moveScalar));
+    }
 }
 
 window.onload = init;

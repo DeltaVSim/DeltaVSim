@@ -3,6 +3,7 @@ class Logic {
     #camera;
     #rocket; #objects = [];
     #simRocket = null; #simObjects = [];
+    #rocketCode;
 
     // Simulation State
     #timestep = 16;
@@ -32,27 +33,31 @@ class Logic {
         if (!this.#running) { return; } // Early exit
         
         const objects = this.thingys;
-        for (const object of objects) {
-            object.relocate(); // Update position of object
-            for (let index = objects.indexOf(object); index < objects.length; index++) {
-                if (objects[index] != object) {
+        for (let iteration = 0; iteration < this.#updatesPerFrame; iteration++) {
+            for (const object of objects) {
+                object.relocate(); // Update position of object
+                for (let index = objects.indexOf(object); index < objects.length; index++) {
+                    if (objects[index] != object) {
 
-                    // Localize the two objects
-                    let object1 = object;
-                    let object2 = objects[index];
+                        // Localize the two objects
+                        let object1 = object;
+                        let object2 = objects[index];
 
-                    // Find distance between the two objects
-                    let distance = object1.position.distance(object2.position);
+                        // Find distance between the two objects
+                        let distance = object1.position.distance(object2.position);
 
-                    // Apply gravitational force (G * (m1 * m2) / r^2)
-                    let force = this.#gravityConstant * (object1.mass * object2.mass) / (distance ** 2);
+                        // Apply gravitational force (G * (m1 * m2) / r^2)
+                        let force = this.#gravityConstant * (object1.mass * object2.mass) / (distance ** 2);
 
-                    // Apply forces to the two objects
-                    object1.impulse(object2.position.subtract(object1.position).divide(distance).multiply(force));
-                    object2.impulse(object1.position.subtract(object2.position).divide(distance).multiply(force));
+                        // Apply forces to the two objects
+                        object1.impulse(object2.position.subtract(object1.position).divide(distance).multiply(force));
+                        object2.impulse(object1.position.subtract(object2.position).divide(distance).multiply(force));
+                    }
                 }
             }
         }
+
+        this.#camera.position = this.#simRocket.position;
     }
 
     Simulate() {
@@ -87,6 +92,9 @@ class Logic {
     }
 
     get camera() { return this.#camera; }
+    get running() { return this.#running; }
+    get rocketCode() { return this.#rocketCode; }
+    set rocketCode(value) { this.#rocketCode = value; }
 }
 
 class Thingy { // Everything set up in the scenario
@@ -166,6 +174,10 @@ class Rocket extends Thingy { // User controlled object
         // Calculate and apply torque (currently using arbitrary constant 10)
         this.rotation -= 10 * (this.#left / 100);
         this.rotation += 10 * (this.#right / 100);
+
+        // Calculate fuel consumption
+        this.fuel -= ((this.#left / 100) * 0.1 + (this.#right / 100) * 0.1);
+        console.log(this.fuel)
     }
 
     static clone(rocket) {
