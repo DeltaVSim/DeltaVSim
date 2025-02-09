@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>DeltaVSim</title>
+</head>
+<body>
+    <div class="logo">
+        <img src="assets/images/DeltaVSim.png" alt="DeltaVSim Logo">
+    </div>
+    
+    <div class="home-container">
+        <div class="section">
+            <h1>Success!</h1>
+            <p class="tagline">DeltaVSim</p>
+        </div>
+    </div>
+
+    <!-- Bottom navbar -->
+    <div class="menu-bar">
+        <div onclick="window.location.href='/'">Home</div>
+        <div onclick="window.location.href='/levels'">Levels</div>
+    </div>
+
+    <script>
+        // Menu bar script
+        function toggleMenu(menuClass) {
+            const menus = document.querySelectorAll('.menu');
+            menus.forEach(menu => {
+                if (menu.classList.contains(menuClass)) {
+                    // Line below was debugged with the help of GitHub Copilot
+                    menu.style.setProperty('display', 
+                        menu.style.display === 'none' || menu.style.display === '' ? 'block' : 'none', 
+                        'important'
+                    );
+                } else {
+                    menu.style.setProperty('display', 'none', 'important');
+                }
+            });
+        }
+    </script>
+</body>
