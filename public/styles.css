@@ -219,6 +219,21 @@ body {
     box-shadow: 0 0.4em 1.2em rgba(0, 0, 0, 0.3);
 }
 
+#end {
+    background-color: black;
+    color: white;
+    width: 80dvw;
+    height: 80dvh;
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 300%;
+    border-radius: 20px;
+    flex-direction: column;
+}
+
 /* Assistant helped enhance level-container style */
 .levels-container {
     padding: 2em;

@@ -69,15 +69,13 @@ class Logic {
                             else if (object2 == this.#simRocket) { ourBoy = object2.position; notOurBoy = object1.position; }
                             if (ourBoy != null) { // Rocket specific collision
                                 const normalAngle = Math.atan((notOurBoy.y - ourBoy.y) / (notOurBoy.x - ourBoy.x)) * (180 / Math.PI);
-                                if (Math.abs(normalAngle - this.#simRocket.rotation) > 30) { // Crashed (not around 90)
+                                /*if (Math.abs(normalAngle - this.#simRocket.rotation) > 30) { // Crashed (not around 90)
                                     //this.#simRocket.exploded = true;
                                     //explosion = true;
-                                }
-                                else { // Landed safely and won!
-                                    console.log("You win!")
-                                    await fetch("/gameOver", {
-                                        method: "GET", headers: {  },
-                                    });
+                                }*/
+                                if (object1 == this.#target || object2 == this.#target) { // Landed on the target safely
+                                    console.log("You win!");
+                                    document.getElementById("end").style.display = "flex";
                                 }
                             }
 
