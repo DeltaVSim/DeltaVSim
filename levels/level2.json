@@ -1,9 +1,9 @@
 {
     "objects" : 
-        [{"mass" : 10, "position" : {"x" : -700, "y" : -300 }, "radius" : 12, "texture" : "moon.png"}, 
-        {"mass" : 106.99 , "position" : {"x" : -200, "y" : 300 }, "radius" : 33, "texture" : "mars.png"}, 
-        {"mass" : 1.7 , "position" : {"x" : 100, "y" : 300 }, "radius" : 10, "texture" : "asteroid.png"},
-        {"mass" : 2 , "position" : {"x" : -500, "y" : -100 }, "radius" : 8, "texture" : "asteroid.png"}], 
+        [{"mass" : 10, "position" : {"x" : -700, "y" : -300 }, "radius" : 12, "texture" : "moon.png", "target" : false}, 
+        {"mass" : 106.99 , "position" : {"x" : -200, "y" : 300 }, "radius" : 33, "texture" : "mars.png", "target" : true}, 
+        {"mass" : 1.7 , "position" : {"x" : 100, "y" : 300 }, "radius" : 10, "texture" : "asteroid.png", "target" : false},
+        {"mass" : 2 , "position" : {"x" : -500, "y" : -100 }, "radius" : 8, "texture" : "asteroid.png", "target" : false}], 
 
     "rocket" : 
         {"position" : {"x" : -700, "y" : -288}, "fuel" : 60}
