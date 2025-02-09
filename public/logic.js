@@ -182,13 +182,14 @@ class Rocket extends Thingy { // User controlled object
             this.velocity = this.velocity.add(this.acceleration);
             this.position = this.position.add(this.velocity);
 
-        // Calculate and apply torque (currently using arbitrary constant 10)
-        this.rotation -= 10 * (this.#left / 100);
-        this.rotation += 10 * (this.#right / 100);
+            // Calculate and apply torque (currently using arbitrary constant 10)
+            this.rotation -= 10 * (this.#left / 100);
+            this.rotation += 10 * (this.#right / 100);
 
-        // Calculate fuel consumption
-        this.fuel -= ((this.#left / 100) * 0.1 + (this.#right / 100) * 0.1);
-        console.log(this.fuel)
+            // Calculate fuel consumption
+            this.fuel -= ((this.#left / 100) * 0.1 + (this.#right / 100) * 0.1);
+            console.log(this.fuel)
+        }
     }
 
     static clone(rocket) {
