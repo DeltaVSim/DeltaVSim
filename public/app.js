@@ -39,14 +39,6 @@ async function init() {
         localStorage.setItem("pidCode", logic.rocketCode);
     }
 
-    window.onkeydown = (event) => {
-        if (event.key == "a") { logic.rocket.left = 100; }
-        if (event.key == "d") { logic.rocket.right = 100; }
-    }
-    window.onkeyup = (event) => {
-        if (event.key == "a") { logic.rocket.left = 0; }
-        if (event.key == "d") { logic.rocket.right = 0; }
-    }
     document.getElementById("ide").oninput = () => {
         logic.rocketCode = document.getElementById("ide").value;
     }
