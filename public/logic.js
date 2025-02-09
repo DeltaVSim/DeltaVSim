@@ -4,6 +4,7 @@ class Logic {
     #rocket; #objects = [];
     #simRocket = null; #simObjects = [];
     #rocketCode = ""; #target = null;
+    #rocketCode = ""; #target = null;
 
     // Simulation State
     #timestep = 16;
@@ -13,16 +14,21 @@ class Logic {
 
     // Physics
     #gravityConstant = 0.0674;
+    #gravityConstant = 0.0674;
 
     constructor(scenario, resX, resY) {
         for (const dict of scenario["objects"]) { // Loading the objects from json
+            const object = new Thingy(new Vector2(dict.position.x, dict.position.y), dict.radius, dict.mass, "assets/textures/" + dict.texture, dict.target);
             const object = new Thingy(new Vector2(dict.position.x, dict.position.y), dict.radius, dict.mass, "assets/textures/" + dict.texture, dict.target);
             this.#objects.push(object);
         }
 
         const dict = scenario["rocket"];
         this.#rocket = new Rocket(new Vector2(dict.position.x, dict.position.y), scenario["rocket"].fuel);
+        const dict = scenario["rocket"];
+        this.#rocket = new Rocket(new Vector2(dict.position.x, dict.position.y), scenario["rocket"].fuel);
         this.#camera = new Camera(resX, resY);
+        this.#camera.position = this.#rocket.position.clone;
         this.#camera.position = this.#rocket.position.clone;
     }
 
@@ -32,6 +38,10 @@ class Logic {
 
         if (!this.#running) { return; } // Early exit
         
+        // Run simulator program
+        Transpile(this.#rocketCode, this.#simRocket, this.#target);
+
+        // Calculate physics (gravitational force and collisions)
         // Run simulator program
         Transpile(this.#rocketCode, this.#simRocket, this.#target);
 
@@ -47,6 +57,8 @@ class Logic {
                         const object1 = object;
                         const object2 = objects[index];
 
+                        // Find distance between the two objects
+                        let distance = object1.position.distance(object2.position);
                         // Find distance between the two objects
                         let distance = object1.position.distance(object2.position);
 
@@ -109,6 +121,9 @@ class Logic {
             const clone = Thingy.clone(object);
             if (clone.target) { this.#target = clone; }
             this.#simObjects.push(clone);
+            const clone = Thingy.clone(object);
+            if (clone.target) { this.#target = clone; }
+            this.#simObjects.push(clone);
         }
         this.#simRocket = Rocket.clone(this.#rocket);
         this.#running = true;
@@ -163,8 +178,11 @@ class Thingy { // Everything set up in the scenario
         this.mass = mass;
         this.texture = texture;
         this.target = target;
+        this.texture = texture;
+        this.target = target;
 
         this.model = "assets/models/planet.json";
+        this.rotation = 90;
         this.rotation = 90;
         this.velocity = new Vector2();
         this.acceleration = new Vector2();
@@ -184,7 +202,13 @@ class Thingy { // Everything set up in the scenario
         this.velocity.y += force.y / this.mass;
     }
 
+    impulse(force) { // Takes a vector for force
+        this.velocity.x += force.x / this.mass;
+        this.velocity.y += force.y / this.mass;
+    }
+
     static clone(object) {
+        let clone = new Thingy(object.position.clone, object.radius, object.mass, object.texture, object.target);
         let clone = new Thingy(object.position.clone, object.radius, object.mass, object.texture, object.target);
         return clone;
     }
@@ -196,6 +220,7 @@ class Rocket extends Thingy { // User controlled object
 
     constructor(position, fuel) {
         super(position, 1, 1); // Radius is 1 and mass is 1
+        super(position, 1, 1); // Radius is 1 and mass is 1
         this.fuel = fuel;
         this.thrust = 0.01; // Maximum thrust power
         this.left = 0; this.right = 0;
@@ -203,8 +228,13 @@ class Rocket extends Thingy { // User controlled object
         this.model = "assets/models/rocket.json";
 
         CreateRenderer(this);
+        this.texture = "assets/textures/rocket.png";
+        this.model = "assets/models/rocket.json";
+
+        CreateRenderer(this);
     }
 
+    get left() { return this.#left; }
     get left() { return this.#left; }
     set left(value) {
         this.#left = value;
@@ -212,6 +242,7 @@ class Rocket extends Thingy { // User controlled object
         else if (this.#left > 100) { this.#left = 100; }
     }
 
+    get right() { return this.#right; }
     get right() { return this.#right; }
     set right(value) {
         this.#right = value;
@@ -225,6 +256,7 @@ class Rocket extends Thingy { // User controlled object
         const radians = this.rotation * (Math.PI / 180);
         const leftThrust = new Vector2(Math.cos(radians), Math.sin(radians)).multiply(this.thrust * (this.#left / 100));
         const rightThrust = new Vector2(Math.cos(radians), Math.sin(radians)).multiply(this.thrust * (this.#right / 100));
+        this.acceleration = leftThrust.add(rightThrust).divide(this.mass);
         this.acceleration = leftThrust.add(rightThrust).divide(this.mass);
         this.velocity = this.velocity.add(this.acceleration);
         this.position = this.position.add(this.velocity);
@@ -265,6 +297,10 @@ class Vector2 { // 2D Vectors
     subtract(vector) { return new Vector2(this.x - vector.x, this.y - vector.y); }
 
     multiply(factor) { return new Vector2(this.x * factor, this.y * factor); }
+
+    divide(factor) { return new Vector2(this.x / factor, this.y / factor); }
+
+    distance(vector) { return Math.sqrt((this.x - vector.x) ** 2 + (this.y - vector.y) ** 2); }
 
     divide(factor) { return new Vector2(this.x / factor, this.y / factor); }
 

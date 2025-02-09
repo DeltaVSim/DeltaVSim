@@ -22,6 +22,22 @@ async function init() {
     }).then((res) => res.json()).then((res) => scenario = res);
 
     // Create logic
+    // Fetch scenario
+    let scenario; const params = new URLSearchParams(document.location.search);
+    await fetch("/getLevel", {
+        method: "POST", headers: { "Content-type": "application/json" },
+        body: JSON.stringify({
+            level: params.get("level")
+        })
+    }).then((res) => res.json()).then((res) => scenario = res);
+
+    //const scenario = {
+    //    "objects" : 
+    //        [{"mass" : 1, "position" : {"x" : 100, "y" : 100 }, "radius" : 2, "texture" : "moon.png", "target": true}], 
+    //    "rocket" : 
+    //        {"position" : {"x" : 0, "y" : 0}, "fuel" : 50}
+    //}
+
     logic = new Logic(scenario, canvas.width, canvas.height);
 
     // Load saved program
@@ -46,6 +62,9 @@ async function init() {
     window.onkeyup = (event) => {
         if (event.key == "a") { logic.rocket.left = 0; }
         if (event.key == "d") { logic.rocket.right = 0; }
+    }
+    document.getElementById("ide").oninput = () => {
+        logic.rocketCode = document.getElementById("ide").value;
     }
 }
 
@@ -74,8 +93,19 @@ window.onmousemove = (event) => {
     if (logic && mouseDown) {
         logic.camera.position = logic.camera.position.add(new Vector2(-event.movementX / moveScalar, event.movementY / moveScalar));
     }
+document.getElementById("canvas").onmousedown = () => { mouseDown = true; }
+document.getElementById("canvas").onmouseup = () => { mouseDown = false; }
+
+const moveScalar = 20;
+window.onmousemove = (event) => {
+    if (logic && !logic.running && mouseDown) {
+        logic.camera.position = logic.camera.position.add(new Vector2(-event.movementX / moveScalar, event.movementY / moveScalar));
+    }
 }
 
+window.onload = () => {
+    init(); brython();
+};
 window.onload = () => {
     init(); brython();
 };

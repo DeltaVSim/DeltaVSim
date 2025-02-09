@@ -10,7 +10,10 @@ function CreateShaders(canvas, gl) {
     const matViewProjUniform = gl.getUniformLocation(shaderProgram, 'matViewProj');
 
     // Shader program and intactness uniform (EXPLOSIONS!)
+    // Shader program and intactness uniform (EXPLOSIONS!)
     gl.useProgram(shaderProgram);
+    const intactnessUniformLocation = gl.getUniformLocation(shaderProgram, 'u_intactness');
+    gl.uniform1f(intactnessUniformLocation, 0.0);
     const intactnessUniformLocation = gl.getUniformLocation(shaderProgram, 'u_intactness');
     gl.uniform1f(intactnessUniformLocation, 0.0);
 
@@ -33,6 +36,8 @@ function CreateShaders(canvas, gl) {
 
         // Arg 1 = position, Arg 2 = look at, Arg 3 = up
         glMatrix.mat4.lookAt(matView, glMatrix.vec3.fromValues(pos.x, pos.y, 50),
+            glMatrix.vec3.fromValues(pos.x, pos.y, 0),
+        glMatrix.mat4.lookAt(matView, glMatrix.vec3.fromValues(pos.x, pos.y, 30),
             glMatrix.vec3.fromValues(pos.x, pos.y, 0),
             glMatrix.vec3.fromValues(0, 1, 0));
 
@@ -66,6 +71,7 @@ function CreateShaders(canvas, gl) {
 
 function CreateRenderer(thingy) {
     LoadJSONResource(thingy.model, function (modelError, model) {
+    LoadJSONResource(thingy.model, function (modelError, model) {
         if (modelError) { console.error(modelError); }
         else {
             // Create buffers (all vertex data to be uploaded to the GPU)
@@ -75,6 +81,7 @@ function CreateRenderer(thingy) {
             const normals = CreateStaticVertexBuffer(gl, new Float32Array(model.meshes[0].normals));
             const indexCount = [].concat.apply([], model.meshes[0].faces).length;
             const vao = Create3DInterleavedBufferVao(gl, vertices, indices, texCoords, normals, posAttrib, texCoordAttrib, normalAttrib);
+            LoadImage(thingy.texture, function (imageError, image) {
             LoadImage(thingy.texture, function (imageError, image) {
                 if (imageError) { console.error(imageError); }
                 else {
@@ -111,6 +118,8 @@ const vertexShaderSourceCode = `#version 300 es
 
     uniform float u_intactness;
 
+    uniform float u_intactness;
+
     out vec2 fragmentTexCoord;
     out vec3 fragmentNormal;
 
@@ -122,6 +131,8 @@ const vertexShaderSourceCode = `#version 300 es
 
         fragmentNormal = (matWorld * vec4(vertexNormal, 0.0)).xyz; // Normals in world space
 
+        //gl_Position = matViewProj * matWorld * vec4(vertexPosition, 1.0);
+        gl_Position = matViewProj * matWorld * vec4(vertexPosition + vertexNormal * u_intactness, 1.0);
         //gl_Position = matViewProj * matWorld * vec4(vertexPosition, 1.0);
         gl_Position = matViewProj * matWorld * vec4(vertexPosition + vertexNormal * u_intactness, 1.0);
     }`;
@@ -147,6 +158,7 @@ const fragmentShaderSourceCode = `#version 300 es
         vec3 lightIntensity = ambientLightIntensity + sunlightIntensity * max(dot(surfaceNormal, sunlightDirNormal), 0.0);
 
         outputColor = vec4(texel.rgb * lightIntensity, texel.a);
+        outputColor = vec4(texel.rgb * lightIntensity, texel.a);
     }`;
 
 class Renderer {
@@ -159,6 +171,7 @@ class Renderer {
         this.texture = texture;
         this.vao = vao;
         this.numIndices = numIndices;
+        this.intactness = 0.0;
         this.intactness = 0.0;
     }
 
@@ -176,6 +189,10 @@ class Renderer {
         const scale = this.thingy.radius;
         glMatrix.vec3.set(this.#scaleVec, scale, scale, scale);
         glMatrix.mat4.fromRotationTranslationScale(this.#matWorld, this.#rotation, position, this.#scaleVec);
+
+        if (this.thingy.exploded) { this.intactness += 0.1; }
+        const intactnessUniformLocation = gl.getUniformLocation(program, 'u_intactness');
+        gl.uniform1f(intactnessUniformLocation, this.intactness);
 
         if (this.thingy.exploded) { this.intactness += 0.1; }
         const intactnessUniformLocation = gl.getUniformLocation(program, 'u_intactness');
