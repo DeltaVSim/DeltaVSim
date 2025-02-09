@@ -188,7 +188,7 @@ body {
 }
 
 /* Assistant-created run button styles */
-.run-button {
+#play {
     position: fixed;
     bottom: 1.25em;
     right: 1.25em;
@@ -206,7 +206,7 @@ body {
     letter-spacing: 0.1em;
 }
 
-.run-button:hover {
+#play:hover {
     background-color: var(--other);
     color: var(--secondary);
     transform: translateY(-2px);
