@@ -11,14 +11,16 @@ class Logic {
     #running = false;
 
     // Physics
-    #gravityConstant = 0.0000000000674;
+    #gravityConstant = 0.0674;
 
     constructor(scenario, resX, resY) {
         for (const dict of scenario["objects"]) { // Loading the objects from json
-            const object = new Thingy(dict.position, dict.radius, dict.mass, dict.texture);
+            const object = new Thingy(new Vector2(dict.position.x, dict.position.y), dict.radius, dict.mass, "assets/textures/" + dict.texture);
             this.#objects.push(object);
         }
-        this.#rocket = new Rocket(scenario["rocket"].position, scenario["rocket"].fuel);
+
+        const dict = scenario["rocket"];
+        this.#rocket = new Rocket(new Vector2(dict.position.x, dict.position.y), scenario["rocket"].fuel);
 
         this.#camera = new Camera(resX, resY);
     }
@@ -32,7 +34,7 @@ class Logic {
         const objects = this.thingys;
         for (const object of objects) {
             object.relocate(); // Update position of object
-            for (let index = this.#simObjects.indexOf(object); index < objects.length; index++) {
+            for (let index = objects.indexOf(object); index < objects.length; index++) {
                 if (objects[index] != object) {
 
                     // Localize the two objects
@@ -81,7 +83,10 @@ class Logic {
             }
             thingys.push(this.#rocket);
         }
+        return thingys;
     }
+
+    get camera() { return this.#camera; }
 }
 
 class Thingy { // Everything set up in the scenario
@@ -95,19 +100,24 @@ class Thingy { // Everything set up in the scenario
         this.position = position;
         this.radius = radius;
         this.mass = mass;
-        this.texture = "assets/images/" + texture;
+        this.texture = texture;
 
         this.model = "assets/models/planet.json";
-        this.rotation = 0;
+        this.rotation = 90;
         this.velocity = new Vector2();
         this.acceleration = new Vector2();
 
         CreateRenderer(this);
     }
 
-    relocate() {
+    relocate() { // Relocates the thingy
         this.velocity = this.velocity.add(this.acceleration);
         this.position = this.position.add(this.velocity);
+    }
+
+    impulse(force) { // Takes a vector for force
+        this.velocity.x += force.x / this.mass;
+        this.velocity.y += force.y / this.mass;
     }
 
     static clone(object) {
@@ -121,9 +131,15 @@ class Rocket extends Thingy { // User controlled object
     #left; #right;
 
     constructor(position, fuel) {
-        super(position, 10, 1); // Radius is 10 and mass is 1
+        super(position, 1, 1); // Radius is 1 and mass is 1
         this.fuel = fuel;
+        this.thrust = 1; // Maximum thrust power
         this.left = 0; this.right = 0;
+
+        this.texture = "assets/textures/rocket.png";
+        this.model = "assets/models/rocket.json";
+
+        CreateRenderer(this);
     }
 
     set left(value) {
@@ -140,10 +156,10 @@ class Rocket extends Thingy { // User controlled object
 
     relocate() {
         // Calculate thrust power and apply force ------------------------------------ ACCOUNT FOR MASS IN THRUST FORCE
-        const radians = this.angle * (Math.PI / 180);
+        const radians = this.rotation * (Math.PI / 180);
         const leftThrust = new Vector2(Math.cos(radians), Math.sin(radians)).multiply(this.thrust * (this.#left / 100));
         const rightThrust = new Vector2(Math.cos(radians), Math.sin(radians)).multiply(this.thrust * (this.#right / 100));
-        this.acceleration = leftThrust.add(rightThrust);
+        this.acceleration = leftThrust.add(rightThrust).divide(this.mass);
         this.velocity = this.velocity.add(this.acceleration);
         this.position = this.position.add(this.velocity);
 
@@ -180,6 +196,10 @@ class Vector2 { // 2D Vectors
     subtract(vector) { return new Vector2(this.x - vector.x, this.y - vector.y); }
 
     multiply(factor) { return new Vector2(this.x * factor, this.y * factor); }
+
+    divide(factor) { return new Vector2(this.x / factor, this.y / factor); }
+
+    distance(vector) { return Math.sqrt((this.x - vector.x) ** 2 + (this.y - vector.y) ** 2); }
 
     get magnitude() { return Math.sqrt(this.x ** 2 + this.y ** 2); }
     get normalized() { return new Vector2(-this.y, this.x).unit; }

@@ -29,8 +29,8 @@ function CreateShaders(canvas, gl) {
         const pos = camera.position;
 
         // Arg 1 = position, Arg 2 = look at, Arg 3 = up
-        glMatrix.mat4.lookAt(matView, glMatrix.vec3.fromValues(pos.x, pos.y, 0),
-            glMatrix.vec3.fromValues(pos.x, pos.y, 1),
+        glMatrix.mat4.lookAt(matView, glMatrix.vec3.fromValues(pos.x, pos.y, 100),
+            glMatrix.vec3.fromValues(pos.x, pos.y, 0),
             glMatrix.vec3.fromValues(0, 1, 0));
 
         // Arg 1 = field of view, Arg 2 = aspect ratio, Arg 3 = near clipping, Arg 4 = far clipping
@@ -62,7 +62,7 @@ function CreateShaders(canvas, gl) {
 }
 
 function CreateRenderer(thingy) {
-    LoadJSONResource(window.location.href + "/" + thingy.model, function (modelError, model) {
+    LoadJSONResource(thingy.model, function (modelError, model) {
         if (modelError) { console.error(modelError); }
         else {
             // Create buffers (all vertex data to be uploaded to the GPU)
@@ -72,7 +72,7 @@ function CreateRenderer(thingy) {
             const normals = CreateStaticVertexBuffer(gl, new Float32Array(model.meshes[0].normals));
             const indexCount = [].concat.apply([], model.meshes[0].faces).length;
             const vao = Create3DInterleavedBufferVao(gl, vertices, indices, texCoords, normals, posAttrib, texCoordAttrib, normalAttrib);
-            LoadImage(window.location.href + "/" + thingy.texture, function (imageError, image) {
+            LoadImage(thingy.texture, function (imageError, image) {
                 if (imageError) { console.error(imageError); }
                 else {
                     const textureSize = image.width * image.height * 4; // R, G, B, a
@@ -141,7 +141,7 @@ const fragmentShaderSourceCode = `#version 300 es
 
         vec3 lightIntensity = ambientLightIntensity + sunlightIntensity * max(dot(surfaceNormal, sunlightDirNormal), 0.0);
 
-        outputColor = vec4(texel.rgb * lightIntensity, texel.a); break;
+        outputColor = vec4(texel.rgb * lightIntensity, texel.a);
     }`;
 
 class Renderer {

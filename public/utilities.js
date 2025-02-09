@@ -157,7 +157,7 @@ function LoadJSONResource(url, callback) {
             try {
                 callback(null, JSON.parse(result));
             }
-            catch (exception) {
+            catch(exception) {
                 callback(exception);
             }
         }
@@ -168,7 +168,7 @@ function Random(min, max) { // Inclusive, exclusive
     return Math.floor(Math.random() * (max - min) + min);
 }
 
-function AudioSource(source) { // Create and add an audio element
+function AudioSource(source) { // Creates an audio element for playing sound effects
     audio = document.createElement("AUDIO");
     audio.src = "Assets/Audio/" + source;
     audio.type = 'audio/mpeg';
