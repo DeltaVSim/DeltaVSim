@@ -1,5 +1,5 @@
 ## Inspiration
-We were deeply inspired by Mr. Lima’s experiences and journey as an aerospace engineer, particularly his work on spacecraft landings.
+We were deeply inspired by Mr. Nicholas Lima’s experiences and journey as an aerospace engineer, particularly his work on spacecraft landings at SpaceX.
 
 ## What it does
 DeltaVSim is a simulator that enables users to program their own PID controller algorithms and test them in various scenarios and levels.
