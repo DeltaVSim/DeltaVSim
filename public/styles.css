@@ -49,7 +49,7 @@ body {
     color: var(--other);
 }
 
-/* Used Github Copilot to generate some css and element sizing formatting below */
+/* Utilized help from Github Copilot for some css element formatting below */
 #canvas {
     width: 100%;
     height: 100%;
@@ -81,7 +81,7 @@ body {
     letter-spacing: 0.1em;
 }
 
-/* Assistant-enhanced menu-bar style */
+/* Assistant helped enhance menu-bar style */
 .menu-bar {
     position: fixed;
     bottom: 1.25em;
@@ -164,6 +164,11 @@ body {
     gap: 1em;
 }
 
+.ide-container {
+    display: flex;
+    gap: 1em;
+}
+
 .ide textarea {
     flex: 1;
     margin: 0.625em 0;
@@ -179,6 +184,7 @@ body {
     line-height: 1.5;
     font-size: 0.95em;
     transition: border-color 0.3s ease;
+    min-width: 300px;
 }
 
 .ide textarea:focus {
@@ -187,7 +193,7 @@ body {
     box-shadow: 0 0 0 2px rgba(255, 117, 23, 0.2);
 }
 
-/* Assistant-created run button style */
+/* Assistant helped create run button style */
 #play {
     position: fixed;
     bottom: 1.25em;
@@ -213,7 +219,7 @@ body {
     box-shadow: 0 0.4em 1.2em rgba(0, 0, 0, 0.3);
 }
 
-/* Assistant-created level-container style */
+/* Assistant helped enhance level-container style */
 .levels-container {
     padding: 2em;
     width: 100%;
@@ -239,7 +245,7 @@ body {
     margin-bottom: 2em;
 }
 
-/* Assistant-created level card hover effect */
+/* Assistant helped debug level card hover effect */
 .level-card {
     position: relative;
     border-radius: 1em;
@@ -299,7 +305,7 @@ body {
     opacity: 0.9;
 }
 
-/* Assistant-created responsive adjustment */
+/* Assistant helped create responsive adjustment */
 @media (max-width: 768px) {
     .levels-grid {
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -487,7 +493,7 @@ body {
     }
 }
 
-/* Assistant-created welcome popup style */
+/* Assistant helped enhance welcome popup style */
 .welcome-popup {
     max-width: 600px !important;
     background-color: var(--secondary) !important;
@@ -571,4 +577,33 @@ body {
     .welcome-content h3 {
         font-size: 1.2em;
     }
+}
+
+.info-section {
+    margin-top: 1em;
+    padding: 1em;
+    background-color: var(--secondary);
+    border-radius: 0.5em;
+    color: var(--other);
+    max-width: 300px;
+    overflow-y: auto;
+}
+
+.info-section h3 {
+    color: var(--alternative);
+    margin-bottom: 0.5em;
+}
+
+.info-section h4 {
+    color: var(--alternative);
+    margin-bottom: 0.5em;
+}
+
+.info-section ul {
+    list-style-type: none; 
+    padding-left: 0; 
+}
+
+.info-section li {
+    margin-bottom: 0.5em; 
 }
