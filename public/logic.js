@@ -204,14 +204,9 @@ class Rocket extends Thingy { // User controlled object
 
     constructor(position, fuel) {
         super(position, 1, 1); // Radius is 1 and mass is 1
-        super(position, 1, 1); // Radius is 1 and mass is 1
         this.fuel = fuel;
         this.thrust = 0.01; // Maximum thrust power
         this.left = 0; this.right = 0;
-        this.texture = "assets/textures/rocket.png";
-        this.model = "assets/models/rocket.json";
-
-        CreateRenderer(this);
         this.texture = "assets/textures/rocket.png";
         this.model = "assets/models/rocket.json";
 
